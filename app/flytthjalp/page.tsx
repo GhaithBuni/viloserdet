@@ -100,7 +100,7 @@ const Page = () => {
     after:block after:h-1 after:bg-[#DEB82D] after:mt-2 
     after:mx-auto after:w-full after:max-w-[200px] md:after:max-w-[300px] lg:after:max-w-[400px] z-10"
         >
-          Flyttstädning
+          Flytthjälp
         </h1>
       </div>
       <div className="container mx-auto px-6 py-12 mt-12">
