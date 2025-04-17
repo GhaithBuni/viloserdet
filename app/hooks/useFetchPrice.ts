@@ -40,21 +40,24 @@ const useFetchPrice = () => {
     setErrorData("");
     setFetchSuccess(false); // Reset success state
     try {
-      const response = await fetch("http://localhost:4000/api/pricing", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          size: houseSpace,
-          startPostcode: zip,
-          endPostcode: zipTo,
-          floor: floorNumber,
-          newFloor: floorNumberTo,
-          elevator: selectedFloor,
-          newElevator: selectedFloorTo,
-          parkingDistance: selectedParking,
-          parkingDistanceTo: selectedParkingTo,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pricing`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            size: houseSpace,
+            startPostcode: zip,
+            endPostcode: zipTo,
+            floor: floorNumber,
+            newFloor: floorNumberTo,
+            elevator: selectedFloor,
+            newElevator: selectedFloorTo,
+            parkingDistance: selectedParking,
+            parkingDistanceTo: selectedParkingTo,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

@@ -49,7 +49,7 @@ const useBookingClean = () => {
       console.log("🟡 Sending data to API:", bookingData);
 
       const { data } = await axios.post(
-        "http://localhost:4000/api/clean-bookings",
+        `${process.env.NEXT_PUBLIC_API_URL}/clean-bookings`,
         bookingData,
         {
           headers: { "Content-Type": "application/json" },
@@ -78,7 +78,7 @@ const useBookingClean = () => {
       console.log("🟡 Sending data to API:", bookingData);
 
       const { data } = await axios.post(
-        "http://localhost:4000/api/clean-visning",
+        `${process.env.NEXT_PUBLIC_API_URL}/clean-visning`,
         bookingData,
         {
           headers: { "Content-Type": "application/json" },
@@ -105,7 +105,7 @@ const useBookingClean = () => {
 
     try {
       const { data } = await axios.get<Booking[]>(
-        "http://localhost:4000/api/clean-bookings"
+        `${process.env.NEXT_PUBLIC_API_URL}/clean-bookings`
       );
 
       console.log("✅ Bookings Fetched:", data);
