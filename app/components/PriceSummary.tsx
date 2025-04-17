@@ -96,7 +96,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   selectedParkingTo,
   onShowToChange,
 }) => {
-  const [rutChecked, setRutChecked] = useState(false);
+  const [rutChecked, setRutChecked] = useState(true);
   const [packingOption, setPackingOption] = useState<
     "Alla rum" | "Bara Kök" | null
   >(null);
@@ -144,7 +144,11 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
     (discountPercentage > 0
       ? totalPrice * (1 - discountPercentage / 100) // Apply discount only to totalPrice
       : totalPrice) +
-    (selectedPacking === "Ja" ? packgingPrice : 0) +
+    (selectedPacking === "Ja"
+      ? packingOption === "Bara Kök"
+        ? packgingPrice * 0.4
+        : packgingPrice
+      : 0) +
     (selectedDisposal === "Ja" ? furniturePrice : 0) +
     (selectedCleaning === "Ja" ? cleaningPrice : 0);
   if (selectedFurniture["Tungt"]) {
@@ -295,7 +299,15 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           {/* Show Packing price if selected */}
           {selectedPacking === "Ja" && (
             <p className="flex justify-between text-green-600 font-semibold">
-              <span>Packning</span> <span>{packgingPrice} kr</span>
+              <span>
+                Packning {packingOption === "Bara Kök" ? "(Bara Kök)" : ""}
+              </span>
+              <span>
+                {packingOption === "Bara Kök"
+                  ? packgingPrice * 0.4
+                  : packgingPrice}{" "}
+                kr
+              </span>
             </p>
           )}
 
@@ -376,6 +388,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
               type="checkbox"
               id="rut"
               className="w-5 h-5"
+              checked={rutChecked}
               onChange={() => {
                 setRutChecked(!rutChecked);
               }}

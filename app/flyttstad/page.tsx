@@ -20,7 +20,7 @@ const Page = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [discountError, setDiscountError] = useState<string | null>(null);
   const [discountPercentage, setDiscountPercentage] = useState<number>(0);
-  const [rutChecked, setRutChecked] = useState(false);
+  const [rutChecked, setRutChecked] = useState(true);
   let finalTotalPrice: number = 0;
 
   // Extra Tjänster states
@@ -411,9 +411,6 @@ const Page = () => {
                   <p className="flex justify-between">
                     <span>Flyttstäd</span> <span>{totalPrice} kr</span>
                   </p>
-                  <p className="text-sm italic text-gray-500">
-                    *Montering per timme kommer att läggas till i priset
-                  </p>
                 </div>
                 {persienner > 0 && (
                   <p className="flex justify-between text-green-600 font-semibold">
@@ -517,15 +514,13 @@ const Page = () => {
                       *RUT-avdraget har tillämpats (50% rabatt)
                     </p>
                   )}
-                  <p className="text-sm text-gray-500">
-                    *Priset kan variera beroende på de valda möbler
-                  </p>
                 </div>
                 <div className="flex items-center gap-2 mt-2">
                   <input
                     type="checkbox"
                     id="rut"
                     className="w-5 h-5"
+                    checked={rutChecked}
                     onChange={() => {
                       setRutChecked(!rutChecked);
                     }}
