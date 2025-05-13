@@ -114,6 +114,12 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   let finalTotalPrice: number = 0;
 
   useEffect(() => {
+    if (selectionType !== "custom") {
+      setSelectedFurniture({});
+    }
+  }, [selectionType, setSelectedFurniture]);
+
+  useEffect(() => {
     onShowToChange(showExtraServices);
   }, [showExtraServices, onShowToChange]);
 
@@ -158,8 +164,8 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
     finalTotalPrice += 600 * selectedFurniture["Piano"];
   }
 
-  if (rutChecked) {
-    finalTotalPrice = finalTotalPrice * 0.5; // Apply RUT deduction to the entire price
+  if (!rutChecked) {
+    finalTotalPrice = finalTotalPrice * 2; // Apply RUT deduction to the entire price
   }
 
   return (
@@ -189,6 +195,35 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
               label: "Behöver du hjälp att packa?",
               state: selectedPacking,
               setState: setSelectedPacking,
+              additionalContent: selectedPacking === "Ja" && (
+                <div className="mt-4 border-t pt-4">
+                  <label className="block font-medium mb-2">
+                    Vad ska packas?
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                        packingOption === "Alla rum"
+                          ? "bg-[#0D3F53]"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => setPackingOption("Alla rum")}
+                    >
+                      Alla rum
+                    </button>
+                    <button
+                      className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                        packingOption === "Bara Kök"
+                          ? "bg-[#0D3F53]"
+                          : "bg-gray-300"
+                      }`}
+                      onClick={() => setPackingOption("Bara Kök")}
+                    >
+                      Bara Kök
+                    </button>
+                  </div>
+                </div>
+              ),
             },
             {
               label: "Behöver du hjälp att Montera/Nedmontera?",
@@ -213,58 +248,34 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           ].map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between border p-4 shadow-lg"
+              className="flex flex-col bg-[#FEF4E8] border rounded-lg p-4 shadow-lg"
             >
-              <span className="font-medium">{item.label}</span>
-              <div className="flex gap-2">
-                <button
-                  className={`px-6 py-2 rounded-lg text-white font-semibold ${
-                    item.state === "Ja" ? "bg-[#0D3F53]" : "bg-gray-300"
-                  }`}
-                  onClick={() => item.setState("Ja")}
-                >
-                  Ja
-                </button>
-                <button
-                  className={`px-6 py-2 rounded-lg text-white font-semibold ${
-                    item.state === "Nej" ? "bg-[#0D3F53]" : "bg-gray-300"
-                  }`}
-                  onClick={() => item.setState("Nej")}
-                >
-                  Nej
-                </button>
+              <div className="flex items-center justify-between">
+                <span className="font-medium">{item.label}</span>
+                <div className="flex gap-2">
+                  <button
+                    className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                      item.state === "Ja" ? "bg-[#0D3F53]" : "bg-gray-300"
+                    }`}
+                    onClick={() => item.setState("Ja")}
+                  >
+                    Ja
+                  </button>
+                  <button
+                    className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                      item.state === "Nej" ? "bg-[#0D3F53]" : "bg-gray-300"
+                    }`}
+                    onClick={() => item.setState("Nej")}
+                  >
+                    Nej
+                  </button>
+                </div>
               </div>
+              {item.additionalContent && (
+                <div className="bg-[#FEF4E8]">{item.additionalContent}</div>
+              )}
             </div>
           ))}
-
-          {/* Show additional options for packing if "Ja" is selected */}
-          {selectedPacking === "Ja" && (
-            <div className="mt-4 p-4 border-t">
-              <label className="block font-medium mb-2">Vad ska packas?</label>
-              <div className="flex gap-2">
-                <button
-                  className={`px-6 py-2 rounded-lg text-white font-semibold ${
-                    packingOption === "Alla rum"
-                      ? "bg-[#0D3F53]"
-                      : "bg-gray-300"
-                  }`}
-                  onClick={() => setPackingOption("Alla rum")}
-                >
-                  Alla rum
-                </button>
-                <button
-                  className={`px-6 py-2 rounded-lg text-white font-semibold ${
-                    packingOption === "Bara Kök"
-                      ? "bg-[#0D3F53]"
-                      : "bg-gray-300"
-                  }`}
-                  onClick={() => setPackingOption("Bara Kök")}
-                >
-                  Bara Kök
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* Show date input for storage if "Ja" is selected */}
           {selectedStorage === "Ja" && (
@@ -292,7 +303,15 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           <h3 className="text-xl font-bold mb-4">Prisuppgifter</h3>
           <div className="mb-3">
             <p className="flex justify-between">
-              <span>Flytthjälp</span> <span>{totalPrice} kr</span>
+              {rutChecked ? (
+                <>
+                  <span>Flytthjälp</span> <span>{totalPrice} kr</span>
+                </>
+              ) : (
+                <>
+                  <span>Flytthjälp</span> <span>{totalPrice * 2} kr</span>
+                </>
+              )}
             </p>
           </div>
 
@@ -322,6 +341,20 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           {selectedCleaning === "Ja" && (
             <p className="flex justify-between text-green-600 font-semibold">
               <span>Flyttstäd</span> <span>{cleaningPrice} kr</span>
+            </p>
+          )}
+
+          {/* Show Tungt and Piano prices if selected */}
+          {selectedFurniture["Tungt"] > 0 && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>Tungt objekt ({selectedFurniture["Tungt"]} st)</span>
+              <span>{600 * selectedFurniture["Tungt"]} kr</span>
+            </p>
+          )}
+          {selectedFurniture["Piano"] > 0 && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>Piano ({selectedFurniture["Piano"]} st)</span>
+              <span>{600 * selectedFurniture["Piano"]} kr</span>
             </p>
           )}
 

@@ -82,7 +82,7 @@ const Page = () => {
   }, [showTo, showExtraServices]);
 
   return (
-    <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
+    <div>
       {/* Header Section */}
       <div className="relative bg-white  flex items-center  h-[65vh] md:h-[70vh] lg:h-[100vh]">
         <div
@@ -98,113 +98,115 @@ const Page = () => {
         <h1
           className="container mx-auto px-6 md:px-12 text-4xl md:text-6xl font-bold text-white text-center relative 
     after:block after:h-1 after:bg-[#DEB82D] after:mt-2 
-    after:mx-auto after:w-full after:max-w-[200px] md:after:max-w-[300px] lg:after:max-w-[400px] z-10"
+    after:mx-auto after:w-full after:max-w-[200px] md:after:max-w-[300px] lg:after:max-w-[400px] z-10 mt-20"
         >
           Flytthjälp
         </h1>
       </div>
-      <div className="container mx-auto px-6 py-12 mt-12">
-        {!showExtraServices && (
-          <>
-            <AddressForm
-              zip={zip}
-              setZip={setZip}
-              houseSpace={houseSpace}
-              setHouseSpace={setHouseSpace}
-              floorNumber={floorNumber}
-              setFloorNumber={setFloorNumber}
-              selectedBuilding={selectedBuilding}
-              setSelectedBuilding={setSelectedBuilding}
-              selectedFloor={selectedFloor}
-              setSelectedFloor={setSelectedFloor}
-              selectedParking={selectedParking}
-              setSelectedParking={setSelectedParking}
-              onShowToChange={(showTo: boolean) => setShowTo(showTo)}
-            />
-
-            {showTo && (
-              <div ref={showToRef}>
-                <>
-                  <AddressToForm
-                    zip={zip}
-                    zipTo={zipTo}
-                    setZipTo={setZipTo}
-                    houseSpace={houseSpace}
-                    houseSpaceTo={houseSpaceTo}
-                    setHouseSpaceTo={setHouseSpaceTo}
-                    floorNumber={floorNumber}
-                    floorNumberTo={floorNumberTo}
-                    setFloorNumberTo={setFloorNumberTo}
-                    selectedBuilding={selectedBuilding}
-                    selectedBuildingTo={selectedBuildingTo}
-                    setSelectedBuildingTo={setSelectedBuildingTo}
-                    selectedFloor={selectedFloor}
-                    selectedFloorTo={selectedFloorTo}
-                    setSelectedFloorTo={setSelectedFloorTo}
-                    selectedParking={selectedParking}
-                    selectedParkingTo={selectedParkingTo}
-                    setSelectedParkingTo={setSelectedParkingTo}
-                    setTotalPrice={setTotalPrice}
-                    setPackgingPrice={setPackgingPrice}
-                    setFurniturePrice={setFurniturePrice}
-                    setCleaningPrice={setCleaningPrice}
-                    onShowToChange={(showExtraServices: boolean) =>
-                      setShowExtraServices(showExtraServices)
-                    }
-                  />
-                </>
-              </div>
-            )}
-          </>
-        )}
-
-        {showExtraServices && (
-          <div ref={showExtraServicesRef}>
+      <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
+        <div className="container mx-auto px-6 py-12 mt-12">
+          {!showExtraServices && (
             <>
-              <PriceSummary
-                totalPrice={totalPrice}
-                rabattKod={rabattKod}
-                setRabattKod={setRabattKod}
-                discountApplied={discountApplied}
-                handleApplyDiscount={() => {}}
-                selectedPacking={selectedPacking ?? ""}
-                setSelectedPacking={setSelectedPacking}
-                selectedAssembly={selectedAssembly ?? ""}
-                setSelectedAssembly={setSelectedAssembly}
-                selectedDisposal={selectedDisposal ?? ""}
-                setSelectedDisposal={setSelectedDisposal}
-                selectedCleaning={selectedCleaning ?? ""}
-                setSelectedCleaning={setSelectedCleaning}
-                selectionType={selectionType}
-                setSelectionType={(type) =>
-                  setSelectionType(type as "Typiskt" | "custom")
-                }
-                furnitureCategories={furnitureCategories}
-                selectedFurniture={selectedFurniture}
-                setSelectedFurniture={setSelectedFurniture}
-                packgingPrice={packgingPrice}
-                furniturePrice={furniturePrice}
-                cleaningPrice={cleaningPrice}
-                formData={formData}
+              <AddressForm
                 zip={zip}
-                zipTo={zipTo}
+                setZip={setZip}
                 houseSpace={houseSpace}
-                houseSpaceTo={houseSpaceTo}
+                setHouseSpace={setHouseSpace}
                 floorNumber={floorNumber}
-                floorNumberTo={floorNumberTo}
-                selectedFloor={selectedFloor}
-                selectedFloorTo={selectedFloorTo}
+                setFloorNumber={setFloorNumber}
                 selectedBuilding={selectedBuilding}
-                selectedBuildingTo={selectedBuildingTo}
+                setSelectedBuilding={setSelectedBuilding}
+                selectedFloor={selectedFloor}
+                setSelectedFloor={setSelectedFloor}
                 selectedParking={selectedParking}
-                selectedParkingTo={selectedParkingTo}
-                onShowToChange={(showExtraServices: boolean) =>
-                  setShowExtraServices(showExtraServices)
-                }
+                setSelectedParking={setSelectedParking}
+                onShowToChange={(showTo: boolean) => setShowTo(showTo)}
               />
+
+              {showTo && (
+                <div ref={showToRef}>
+                  <>
+                    <AddressToForm
+                      zip={zip}
+                      zipTo={zipTo}
+                      setZipTo={setZipTo}
+                      houseSpace={houseSpace}
+                      houseSpaceTo={houseSpaceTo}
+                      setHouseSpaceTo={setHouseSpaceTo}
+                      floorNumber={floorNumber}
+                      floorNumberTo={floorNumberTo}
+                      setFloorNumberTo={setFloorNumberTo}
+                      selectedBuilding={selectedBuilding}
+                      selectedBuildingTo={selectedBuildingTo}
+                      setSelectedBuildingTo={setSelectedBuildingTo}
+                      selectedFloor={selectedFloor}
+                      selectedFloorTo={selectedFloorTo}
+                      setSelectedFloorTo={setSelectedFloorTo}
+                      selectedParking={selectedParking}
+                      selectedParkingTo={selectedParkingTo}
+                      setSelectedParkingTo={setSelectedParkingTo}
+                      setTotalPrice={setTotalPrice}
+                      setPackgingPrice={setPackgingPrice}
+                      setFurniturePrice={setFurniturePrice}
+                      setCleaningPrice={setCleaningPrice}
+                      onShowToChange={(showExtraServices: boolean) =>
+                        setShowExtraServices(showExtraServices)
+                      }
+                    />
+                  </>
+                </div>
+              )}
             </>
-          </div>
-        )}
+          )}
+
+          {showExtraServices && (
+            <div ref={showExtraServicesRef}>
+              <>
+                <PriceSummary
+                  totalPrice={totalPrice}
+                  rabattKod={rabattKod}
+                  setRabattKod={setRabattKod}
+                  discountApplied={discountApplied}
+                  handleApplyDiscount={() => {}}
+                  selectedPacking={selectedPacking ?? ""}
+                  setSelectedPacking={setSelectedPacking}
+                  selectedAssembly={selectedAssembly ?? ""}
+                  setSelectedAssembly={setSelectedAssembly}
+                  selectedDisposal={selectedDisposal ?? ""}
+                  setSelectedDisposal={setSelectedDisposal}
+                  selectedCleaning={selectedCleaning ?? ""}
+                  setSelectedCleaning={setSelectedCleaning}
+                  selectionType={selectionType}
+                  setSelectionType={(type) =>
+                    setSelectionType(type as "Typiskt" | "custom")
+                  }
+                  furnitureCategories={furnitureCategories}
+                  selectedFurniture={selectedFurniture}
+                  setSelectedFurniture={setSelectedFurniture}
+                  packgingPrice={packgingPrice}
+                  furniturePrice={furniturePrice}
+                  cleaningPrice={cleaningPrice}
+                  formData={formData}
+                  zip={zip}
+                  zipTo={zipTo}
+                  houseSpace={houseSpace}
+                  houseSpaceTo={houseSpaceTo}
+                  floorNumber={floorNumber}
+                  floorNumberTo={floorNumberTo}
+                  selectedFloor={selectedFloor}
+                  selectedFloorTo={selectedFloorTo}
+                  selectedBuilding={selectedBuilding}
+                  selectedBuildingTo={selectedBuildingTo}
+                  selectedParking={selectedParking}
+                  selectedParkingTo={selectedParkingTo}
+                  onShowToChange={(showExtraServices: boolean) =>
+                    setShowExtraServices(showExtraServices)
+                  }
+                />
+              </>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
