@@ -23,13 +23,15 @@ const page = () => {
   };
 
   return (
-    <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
+    <div>
          {/* Header Section */}
       <div className="relative bg-white px-6 md:px-12 pt-24 md:pt-32 pb-32 h-[55vh] flex items-center">
         <h1 className="container mx-auto px-6 md:px-12 text-4xl md:text-6xl font-bold text-[#0D3F53] text-center relative after:block after:w-full after:h-1 after:bg-[#DEB82D] after:mt-2">
         Kontakta oss
         </h1>
       </div>  
+          <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
+
         
     
       <div className="max-w-6xl mx-auto">
@@ -122,6 +124,7 @@ const page = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

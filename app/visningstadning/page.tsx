@@ -99,7 +99,8 @@ const Page = () => {
   }
 
   return (
-    <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
+    <div>
+    
       {/* Header Section */}
       <div className="relative bg-white  flex items-center  h-[65vh] md:h-[70vh] lg:h-[100vh]">
         <div
@@ -120,6 +121,7 @@ const Page = () => {
           Visningstädning
         </h1>
       </div>
+      <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
 
       <div className="container mx-auto px-6 py-12 mt-12 ">
         {!showExtraServices && (
@@ -556,6 +558,7 @@ const Page = () => {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 };
