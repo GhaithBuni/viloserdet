@@ -11,28 +11,26 @@ const teamMembers = [
 
 const page = () => {
   return (
-    <div>
+    <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
       {/* Header Section */}
       <div className="relative bg-white px-6 md:px-12 pt-24 md:pt-32 pb-32 h-[55vh] flex items-center">
         <h1 className="container mx-auto px-6 md:px-12 text-4xl md:text-6xl font-bold text-[#0D3F53] text-center relative after:block after:w-full after:h-1 after:bg-[#DEB82D] after:mt-2">
           Lär känna oss
         </h1>
       </div>
-      <div className="bg-[#F5F5F5] text-black min-h-screen py-24">
-        {/* Main Section (Two Column Layout) */}
-        <div className="container mx-auto px-6 md:px-12 mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Left Content Section */}
-          <div className="md:col-span-2">
-            <h2 className="text-3xl font-bold text-[#0D3F53]">Om oss</h2>
-            <p className="mt-4 text-lg text-gray-700">
-              Vi på VLÖSERDET är dedikerade till att leverera högkvalitativa
-              flytt- och städtjänster för både privatpersoner och företag. Med
-              vår erfarenhet, engagemang och passion för service har vi byggt
-              ett starkt rykte som en pålitlig partner för en smidig flytt och
-              skinande rena hem. Vi vet att både flytt och städning kan vara
-              stressande, och vi är här för att göra processen så enkel och
-              bekymmersfri som möjligt.
-            </p>
+
+      {/* Main Section (Two Column Layout) */}
+      <div className="container mx-auto px-6 md:px-12 mt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+        {/* Left Content Section */}
+        <div className="md:col-span-2">
+          <h2 className="text-3xl font-bold text-[#0D3F53]">Om oss</h2>
+          <p className="mt-4 text-lg text-gray-700">
+          Vi på VLÖSERDET är dedikerade till att leverera högkvalitativa flytt- och städtjänster för både
+privatpersoner och företag.
+Med vår erfarenhet, engagemang och passion för service har vi byggt ett starkt rykte som en pålitlig
+partner för en smidig flytt och skinande rena hem. Vi vet att både flytt och städning kan vara
+stressande, och vi är här för att göra processen så enkel och bekymmersfri som möjligt.
+          </p>
 
             <h2 className="text-3xl font-bold text-[#0D3F53] mt-8">
               Våra Tjänster
@@ -337,6 +335,7 @@ const page = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
