@@ -17,6 +17,6 @@ This is the frontend for a service website offering cleaning and moving services
 - [Tailwind CSS]
 - [Axios]for API requests
 
-- ```bash
+```bash
 npm install
 npm run dev
