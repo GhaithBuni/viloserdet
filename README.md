@@ -16,8 +16,8 @@ This is the backend for a web application offering cleaning and moving services.
 - Node.js
 - Express.js
 - MongoDB
-- Google Maps API (or any geolocation/distance lib)
-- JWT (for authentication, if used)
+- Google Maps API 
+- JWT 
 
 - ```bash
 npm install
