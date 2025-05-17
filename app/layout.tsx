@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { PT_Sans } from "next/font/google";
 import "./globals.css";
-import NavBar from "./components/Nav/NavBar";
-import Footer from "./components/Footer/page";
+import ClientLayout from "./components/ClientLayout";
 
 const ptSans = PT_Sans({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -21,10 +20,7 @@ export default function RootLayout({
       <body
         className={`${ptSans.className} antialiased min-h-screen flex flex-col`}
       >
-        <NavBar />
-        <main className="flex-grow">{children}</main>{" "}
-        {/* Pushes footer to the bottom */}
-        <Footer />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
