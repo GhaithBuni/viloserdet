@@ -103,21 +103,7 @@ const omOss = {
         },
       ],
     },
-    {
-      name: "team",
-      title: "Teamet",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "name", type: "string" },
-            { name: "role", type: "string" },
-            { name: "img", type: "string" },
-          ],
-        },
-      ],
-    },
+
     {
       name: "services",
       title: "Tjänster Sektion",
