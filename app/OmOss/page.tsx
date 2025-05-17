@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { client } from "@/sanity/lib/client";
 import TeamSection from "../components/TeamSection";
+export const dynamic = "force-dynamic"; // disables static caching
 
 type ServiceItem = {
   serviceName: string;
