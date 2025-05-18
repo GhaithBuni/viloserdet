@@ -195,13 +195,21 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
                             formik.setFieldValue("movingDay", date);
                             setIsCalendarOpen(false); // Close calendar after selecting a date
                           }}
-                          tileDisabled={({ date }) =>
-                            lockedDates.some(
-                              (lockedDate) =>
-                                lockedDate.toDateString() ===
-                                date.toDateString()
-                            )
-                          } // Disable locked dates
+                          minDate={new Date()} // This sets minimum date to today
+                          tileDisabled={({ date }) => {
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+
+                            // Check if date is in the past or is locked
+                            return (
+                              date < today ||
+                              lockedDates.some(
+                                (lockedDate) =>
+                                  lockedDate.toDateString() ===
+                                  date.toDateString()
+                              )
+                            );
+                          }}
                         />
                       </div>
                     )}

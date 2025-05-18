@@ -140,7 +140,7 @@ const Page = () => {
                 type="text"
                 placeholder="Adress"
                 className={` md:w-1/5 p-3 border rounded-md focus:outline-none focus:ring-2 transition ${
-                  errors.zipFrom
+                  errors.adress
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-300 focus:ring-[#DEB82D]"
                 }`}
@@ -202,8 +202,8 @@ const Page = () => {
                       selectedBuilding === item.label
                         ? "bg-[#0D3F53] text-white scale-105 shadow-md"
                         : errors.selectedBuilding
-                        ? "border-red-500"
-                        : "bg-white hover:bg-gray-100"
+                          ? "border-red-500"
+                          : "bg-white hover:bg-gray-100"
                     }`}
                   >
                     <img

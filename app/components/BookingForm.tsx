@@ -249,12 +249,19 @@ const BookingForm: React.FC<BookingFormProps> = ({
                         formik.setFieldValue("movingDay", date);
                         setIsCalendarOpen(false); // Close calendar after selecting a date
                       }}
-                      tileDisabled={({ date }) =>
-                        lockedDates.some(
-                          (lockedDate) =>
-                            lockedDate.toDateString() === date.toDateString()
-                        )
-                      } // Disable locked dates
+                      minDate={new Date()} // Add minimum date
+                      tileDisabled={({ date }) => {
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+
+                        return (
+                          date < today ||
+                          lockedDates.some(
+                            (lockedDate) =>
+                              lockedDate.toDateString() === date.toDateString()
+                          )
+                        );
+                      }}
                     />
                   </div>
                 )}
