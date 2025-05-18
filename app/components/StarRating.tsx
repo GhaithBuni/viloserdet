@@ -11,20 +11,20 @@ export const StarRating = ({
 }) => {
   return (
     <div className="flex items-center justify-between mt-2">
-      {/* Stars /}
       <div className="flex">
         {[...Array(5)].map((_, index) => (
           <Star
             key={index}
             size={20}
             className={
-              index < count ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+              index < count
+                ? "text-yellow-400 fill-yellow-400"
+                : "text-gray-300"
             }
           />
         ))}
       </div>
 
-      {/ Google link icon */}
       <a
         href={googleUrl}
         target="_blank"
