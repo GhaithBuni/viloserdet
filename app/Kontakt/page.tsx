@@ -9,6 +9,11 @@ const page = () => {
     number: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [feedback, setFeedback] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -16,9 +21,45 @@ const page = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsLoading(true);
+    setFeedback(null);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/send-confirmation/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setFeedback({
+          type: "success",
+          message: "Meddelande skickat framgångsrikt!",
+        });
+        setFormData({ name: "", email: "", number: "", message: "" }); // Reset form
+      } else {
+        setFeedback({
+          type: "error",
+          message: "Det gick inte att skicka meddelandet.",
+        });
+      }
+    } catch (error) {
+      setFeedback({
+        type: "error",
+        message: "Det gick inte att skicka meddelandet. Försök igen senare.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -126,11 +167,23 @@ const page = () => {
                 required
               />
             </div>
+            {feedback && (
+              <div
+                className={`mb-4 p-3 rounded-lg ${
+                  feedback.type === "success"
+                    ? "bg-green-100 text-green-700"
+                    : "bg-red-100 text-red-700"
+                }`}
+              >
+                {feedback.message}
+              </div>
+            )}
             <button
               type="submit"
-              className="w-full bg-[#0D3F53] text-white text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-[#DEB82D] transition-all"
+              disabled={isLoading}
+              className="w-full bg-[#0D3F53] text-white text-lg font-semibold py-3 rounded-lg shadow-md hover:bg-[#DEB82D] transition-all disabled:bg-gray-400"
             >
-              Skicka Meddelande
+              {isLoading ? "Skickar..." : "Skicka Meddelande"}
             </button>
           </form>
         </div>

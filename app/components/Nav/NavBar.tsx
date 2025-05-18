@@ -43,14 +43,23 @@ const NavBar = () => {
             </button>
             {isTjansterOpen && (
               <div className="absolute bg-white text-black mt-3 rounded-md shadow-lg w-48 text-base xl:text-lg">
-                <a href="/flytthjalp" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/flytthjalp"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flytthjälp
                 </a>
-                <a href="/flyttstad" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/flyttstad"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flyttstäd
                 </a>
-               
-                <a href="/visningstadning" className="block px-4 py-3 hover:bg-gray-200">
+
+                <a
+                  href="/visningstadning"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Visningstädning
                 </a>
               </div>
@@ -71,7 +80,7 @@ const NavBar = () => {
               {link.name}
             </a>
           ))}
-          
+
           {/* Ingår i vårt fasta pris Dropdown */}
           <div className="relative">
             <button
@@ -85,14 +94,23 @@ const NavBar = () => {
             </button>
             {isIngarOpen && (
               <div className="absolute bg-white text-black mt-3 rounded-md shadow-lg w-56 text-base xl:text-lg right-0">
-                <a href="/Ingariflytthjalp" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/Ingariflytthjalp"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flytthjälp
                 </a>
-                <a href="/Ingariflyttstadingen" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/Ingariflyttstadingen"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flyttstädning
                 </a>
-               
-                <a href="/Ingarivisningsstadning" className="block px-4 py-3 hover:bg-gray-200">
+
+                <a
+                  href="/Ingarivisningsstadning"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Visningstädning
                 </a>
               </div>
@@ -101,10 +119,25 @@ const NavBar = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-4 xl:space-x-6 text-xl xl:text-2xl">
-            {[FaInstagram, FaTiktok, FaFacebookF].map((Icon, index) => (
+            {[
+              {
+                Icon: FaInstagram,
+                url: "#",
+              },
+              {
+                Icon: FaTiktok,
+                url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
+              },
+              {
+                Icon: FaFacebookF,
+                url: "https://www.facebook.com/profile.php?id=100095168015949&mibextid=wwXIfr&rdid=bapIapBNd32CoTsW&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HidGHU9AB%2F%3Fmibextid%3DwwXIfr",
+              },
+            ].map(({ Icon, url }, index) => (
               <a
                 key={index}
-                href="#"
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="transition-all duration-300 text-white hover:text-gray-300"
               >
                 <Icon />
@@ -159,14 +192,23 @@ const NavBar = () => {
             </button>
             {isTjansterOpen && (
               <div className="bg-white text-black mt-2 rounded-md shadow-lg w-full">
-                <a href="/flytthjalp" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/flytthjalp"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flytthjälp
                 </a>
-                <a href="/flyttstad" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/flyttstad"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flyttstäd
                 </a>
-                
-                <a href="/visningstadning" className="block px-4 py-3 hover:bg-gray-200">
+
+                <a
+                  href="/visningstadning"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Visningstädning
                 </a>
               </div>
@@ -187,7 +229,7 @@ const NavBar = () => {
               {link.name}
             </a>
           ))}
-          
+
           {/* Ingår i vårt fasta pris Dropdown */}
           <div className="relative w-full text-center">
             <button
@@ -201,14 +243,23 @@ const NavBar = () => {
             </button>
             {isIngarOpen && (
               <div className="bg-white text-black mt-2 rounded-md shadow-lg w-full">
-                <a href="/Ingariflytthjalp" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/Ingariflytthjalp"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flytthjälp
                 </a>
-                <a href="/Ingariflyttstadingen" className="block px-4 py-3 hover:bg-gray-200">
+                <a
+                  href="/Ingariflyttstadingen"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Flyttstädning
                 </a>
-            
-                <a href="/Ingarivisningsstadning" className="block px-4 py-3 hover:bg-gray-200">
+
+                <a
+                  href="/Ingarivisningsstadning"
+                  className="block px-4 py-3 hover:bg-gray-200"
+                >
                   Visningstädning
                 </a>
               </div>
@@ -217,10 +268,25 @@ const NavBar = () => {
 
           {/* Social Media Icons */}
           <div className="flex space-x-6 text-2xl pt-2">
-            {[FaInstagram, FaTiktok, FaFacebookF].map((Icon, index) => (
+            {[
+              {
+                Icon: FaInstagram,
+                url: "#",
+              },
+              {
+                Icon: FaTiktok,
+                url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
+              },
+              {
+                Icon: FaFacebookF,
+                url: "https://www.facebook.com/profile.php?id=100095168015949&mibextid=wwXIfr&rdid=bapIapBNd32CoTsW&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HidGHU9AB%2F%3Fmibextid%3DwwXIfr",
+              },
+            ].map(({ Icon, url }, index) => (
               <a
                 key={index}
-                href="#"
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="transition-all duration-300 text-white hover:text-gray-300"
               >
                 <Icon />
