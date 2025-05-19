@@ -124,10 +124,10 @@ const NavBar = () => {
                 Icon: FaInstagram,
                 url: "#",
               },
-              {
-                Icon: FaTiktok,
-                url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
-              },
+              // {
+              //   Icon: FaTiktok,
+              //   url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
+              // },
               {
                 Icon: FaFacebookF,
                 url: "https://www.facebook.com/profile.php?id=100095168015949&mibextid=wwXIfr&rdid=bapIapBNd32CoTsW&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HidGHU9AB%2F%3Fmibextid%3DwwXIfr",
@@ -273,10 +273,10 @@ const NavBar = () => {
                 Icon: FaInstagram,
                 url: "#",
               },
-              {
-                Icon: FaTiktok,
-                url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
-              },
+              // {
+              //   Icon: FaTiktok,
+              //   url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
+              // },
               {
                 Icon: FaFacebookF,
                 url: "https://www.facebook.com/profile.php?id=100095168015949&mibextid=wwXIfr&rdid=bapIapBNd32CoTsW&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HidGHU9AB%2F%3Fmibextid%3DwwXIfr",
