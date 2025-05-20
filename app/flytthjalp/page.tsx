@@ -13,6 +13,7 @@ const Page = () => {
     rabattKod,
     setRabattKod,
     discountApplied,
+    setDiscountApplied,
     totalPrice,
     setTotalPrice,
     zip,
@@ -164,9 +165,11 @@ const Page = () => {
               <>
                 <PriceSummary
                   totalPrice={totalPrice}
+                  setTotalPrice={setTotalPrice}
                   rabattKod={rabattKod}
                   setRabattKod={setRabattKod}
                   discountApplied={discountApplied}
+                  setDiscountApplied={setDiscountApplied}
                   handleApplyDiscount={() => {}}
                   selectedPacking={selectedPacking ?? ""}
                   setSelectedPacking={setSelectedPacking}
@@ -184,8 +187,11 @@ const Page = () => {
                   selectedFurniture={selectedFurniture}
                   setSelectedFurniture={setSelectedFurniture}
                   packgingPrice={packgingPrice}
+                  setPackgingPrice={setPackgingPrice}
                   furniturePrice={furniturePrice}
+                  setFurniturePrice={setFurniturePrice}
                   cleaningPrice={cleaningPrice}
+                  setCleaningPrice={setCleaningPrice}
                   formData={formData}
                   zip={zip}
                   zipTo={zipTo}

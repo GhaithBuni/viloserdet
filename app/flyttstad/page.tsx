@@ -37,19 +37,41 @@ const Page = () => {
 
   const handleApplyDiscount = async () => {
     try {
-      setDiscountError(null); // Clear previous errors
+      setDiscountError(null);
       console.log("Applying discount code:", rabattKod);
+
+      // Check for special price codes first (case insensitive)
+      const lowerCaseCode = rabattKod.toLowerCase();
+      if (
+        lowerCaseCode.startsWith("städ") ||
+        lowerCaseCode.startsWith("stad")
+      ) {
+        const priceFromCode = parseInt(rabattKod.replace(/städ|stad/i, ""));
+        if (!isNaN(priceFromCode)) {
+          // Validate price range
+          if (priceFromCode >= 1199 && priceFromCode <= 3399) {
+            setTotalPrice(priceFromCode);
+            setDiscountApplied(true);
+            return;
+          } else {
+            setDiscountError("Ogiltig Rabattkod.");
+            return;
+          }
+        }
+      }
+
+      // If not a special code, proceed with regular discount validation
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/discounts/validate`,
         { code: rabattKod }
-      ); // Call backend API
+      );
       if (response.data.valid) {
-        setDiscountPercentage(response.data.percentage); // Store discount
-        console.log(`✅ Discount applied: ${discountPercentage}%`);
+        setDiscountPercentage(response.data.percentage);
+        console.log(`✅ Rabatt tillämpas ${discountPercentage}%`);
       }
     } catch (error) {
       console.error("Error applying discount:", error);
-      setDiscountError("Invalid or expired discount code.");
+      setDiscountError("Ogiltig eller utgången rabattkod.");
     }
   };
   const Prices = {
@@ -60,10 +82,17 @@ const Page = () => {
     InsidanMaskiner: 100,
   };
 
-  const removeDiscount = () => {
+  const removeDiscount = async () => {
     setDiscountPercentage(0);
     setRabattKod("");
     setDiscountError(null);
+    setDiscountApplied(false);
+
+    // Re-fetch original price
+    await fetchPrice({
+      houseSpace,
+      setTotalPrice,
+    });
   };
 
   const handleButtonClick = () => {
@@ -452,7 +481,7 @@ const Page = () => {
                   {inglasadDuschhörna === "Ja" && (
                     <p className="flex justify-between text-green-600 font-semibold">
                       <span>InglasadDuschhörna</span>{" "}
-                      <span>{Prices.InglasadDuschhörna} kr</span>
+                      <span>{Prices.ExtraToalett} kr</span>
                     </p>
                   )}
                   {insidanMaskiner === "Ja" && (
@@ -500,13 +529,15 @@ const Page = () => {
                         value={rabattKod}
                         onChange={(e) => setRabattKod(e.target.value)}
                       />
-                      <button
-                        onClick={handleApplyDiscount}
-                        className="px-4 py-3 bg-[#0D3F53] text-white rounded-md hover:bg-[#0A2E3D] transition"
-                      >
-                        Använd
-                      </button>
-                      {discountPercentage > 0 && (
+                      {!discountApplied && !discountPercentage && (
+                        <button
+                          onClick={handleApplyDiscount}
+                          className="px-4 py-3 bg-[#0D3F53] text-white rounded-md hover:bg-[#0A2E3D] transition"
+                        >
+                          Använd
+                        </button>
+                      )}
+                      {(discountPercentage > 0 || discountApplied) && (
                         <button
                           onClick={removeDiscount}
                           className="px-4 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition"

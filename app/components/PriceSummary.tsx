@@ -3,12 +3,15 @@ import axios from "axios"; // Import axios for API requests
 import FurnitureSelection from "./FurnitureSelection";
 import BookingForm from "./BookingForm";
 import router from "next/router";
+import useFetchPrice from "../hooks/useFetchPrice"; // ✅ Import the hook
 
 interface PriceSummaryProps {
   totalPrice: number;
+  setTotalPrice: (price: number) => void;
   rabattKod: string;
   setRabattKod: (code: string) => void;
   discountApplied: boolean;
+  setDiscountApplied: (applied: boolean) => void;
   handleApplyDiscount: () => void;
   selectedPacking: string;
   setSelectedPacking: (packing: string) => void;
@@ -31,8 +34,11 @@ interface PriceSummaryProps {
     React.SetStateAction<Record<string, number>>
   >;
   packgingPrice: number;
+  setPackgingPrice: (price: number) => void;
   furniturePrice: number;
+  setFurniturePrice: (price: number) => void;
   cleaningPrice: number;
+  setCleaningPrice: (price: number) => void;
   formData: {
     name: string;
     email: string;
@@ -56,14 +62,17 @@ interface PriceSummaryProps {
   selectedBuildingTo: string | null;
   selectedFloorTo: string | null;
   selectedParkingTo: string | null;
+
   onShowToChange: (showExtraServices: boolean) => void;
 }
 
 const PriceSummary: React.FC<PriceSummaryProps> = ({
   totalPrice,
+  setTotalPrice,
   rabattKod,
   setRabattKod,
   discountApplied,
+  setDiscountApplied,
   handleApplyDiscount,
   selectedPacking,
   setSelectedPacking,
@@ -81,6 +90,9 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   packgingPrice,
   furniturePrice,
   cleaningPrice,
+  setFurniturePrice,
+  setCleaningPrice,
+  setPackgingPrice,
   formData,
   zip,
   houseSpace,
@@ -112,6 +124,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   const [keyHandling, setKeyHandling] = useState<string>("Vi öppnar åt er");
   const [showExtraServices, setShowExtraServices] = useState(true);
   let finalTotalPrice: number = 0;
+  const { fetchPrice, loadingPrice, errorData, fetchSuccess } = useFetchPrice(); // ✅ Get the function and loading state
 
   useEffect(() => {
     if (selectionType !== "custom") {
@@ -125,26 +138,64 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
 
   handleApplyDiscount = async () => {
     try {
-      setDiscountError(null); // Clear previous errors
+      setDiscountError(null);
       console.log("Applying discount code:", rabattKod);
+
+      // Check for special price codes first (case insensitive)
+      const lowerCaseCode = rabattKod.toLowerCase();
+      if (lowerCaseCode.startsWith("flytt")) {
+        const priceFromCode = parseInt(rabattKod.replace(/flytt/i, ""));
+        if (!isNaN(priceFromCode)) {
+          // Validate price range
+          if (priceFromCode >= 1499 && priceFromCode <= 3999) {
+            finalTotalPrice = priceFromCode;
+            setTotalPrice(priceFromCode);
+            setDiscountApplied(true);
+            return;
+          } else {
+            setDiscountError("Ogiltig Rabattkod.");
+            return;
+          }
+        }
+      }
+
+      // If not a special code, proceed with regular discount validation
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/discounts/validate`,
         { code: rabattKod }
-      ); // Call backend API
+      );
       if (response.data.valid) {
-        setDiscountPercentage(response.data.percentage); // Store discount
-        console.log(`✅ Discount applied: ${discountPercentage}%`);
+        setDiscountPercentage(response.data.percentage);
+        console.log(`✅ Rabatt tillämpas ${discountPercentage}%`);
       }
     } catch (error) {
       console.error("Error applying discount:", error);
-      setDiscountError("Invalid or expired discount code.");
+      setDiscountError("Ogiltig eller utgången rabattkod.");
     }
   };
 
-  const removeDiscount = () => {
+  const removeDiscount = async () => {
     setDiscountPercentage(0);
     setRabattKod("");
     setDiscountError(null);
+    setDiscountApplied(false);
+
+    // Re-fetch original price
+    await fetchPrice({
+      houseSpace,
+      zip,
+      zipTo,
+      floorNumber,
+      floorNumberTo,
+      selectedFloor,
+      selectedFloorTo,
+      selectedParking,
+      setTotalPrice,
+      setPackgingPrice,
+      setFurniturePrice,
+      setCleaningPrice,
+      selectedParkingTo,
+    });
   };
   finalTotalPrice =
     (discountPercentage > 0
@@ -379,20 +430,23 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
                 value={rabattKod}
                 onChange={(e) => setRabattKod(e.target.value)}
               />
-              <button
-                onClick={handleApplyDiscount}
-                className="px-4 py-3 bg-[#0D3F53] text-white rounded-md hover:bg-[#0A2E3D] transition"
-              >
-                Använd
-              </button>
-              {discountPercentage > 0 && (
+              {!discountApplied && !discountPercentage && (
                 <button
-                  onClick={removeDiscount}
-                  className="px-4 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                  onClick={handleApplyDiscount}
+                  className="px-4 py-3 bg-[#0D3F53] text-white rounded-md hover:bg-[#0A2E3D] transition"
                 >
-                  Ta bort rabatt
+                  Använd
                 </button>
               )}
+              {discountPercentage > 0 ||
+                (discountApplied && (
+                  <button
+                    onClick={removeDiscount}
+                    className="px-4 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                  >
+                    Ta bort rabatt
+                  </button>
+                ))}
             </div>
             {discountApplied && (
               <p className="text-green-600 mt-2">Rabattkod tillämpad!</p>
