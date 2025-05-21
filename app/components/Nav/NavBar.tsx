@@ -120,10 +120,10 @@ const NavBar = () => {
           {/* Social Media Icons */}
           <div className="flex space-x-4 xl:space-x-6 text-xl xl:text-2xl">
             {[
-              {
-                Icon: FaInstagram,
-                url: "#",
-              },
+              // {
+              //   Icon: FaInstagram,
+              //   url: "#",
+              // },
               // {
               //   Icon: FaTiktok,
               //   url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",
@@ -155,7 +155,7 @@ const NavBar = () => {
             ☰
           </button>
           <div className="flex space-x-4 text-xl">
-            {[FaInstagram, FaTiktok, FaFacebookF].map((Icon, index) => (
+            {[FaFacebookF].map((Icon, index) => (
               <a
                 key={index}
                 href="#"
@@ -269,10 +269,10 @@ const NavBar = () => {
           {/* Social Media Icons */}
           <div className="flex space-x-6 text-2xl pt-2">
             {[
-              {
-                Icon: FaInstagram,
-                url: "#",
-              },
+              // {
+              //   Icon: FaInstagram,
+              //   url: "#",
+              // },
               // {
               //   Icon: FaTiktok,
               //   url: "https://www.tiktok.com/@vilserdet?_t=ZN-8wT0ns3TUaU&_r=1",

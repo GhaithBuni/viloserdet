@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { FaTiktok, FaFacebookF, FaInstagram } from "react-icons/fa";
+import { FaTiktok, FaFacebookF } from "react-icons/fa";
 import Image from "next/image";
 
 const Footer = () => {
@@ -83,11 +83,13 @@ const Footer = () => {
             >
               {/* <FaTiktok /> */}
             </a>
-            <a href="#" className="hover:text-[#deb82d]">
+            <a
+              href="https://www.facebook.com/profile.php?id=100095168015949&mibextid=wwXIfr&rdid=bapIapBNd32CoTsW&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1HidGHU9AB%2F%3Fmibextid%3DwwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#deb82d]"
+            >
               <FaFacebookF />
-            </a>
-            <a href="#" className="hover:text-[#deb82d]">
-              <FaInstagram />
             </a>
           </div>
           <p className="text-sm text-gray-200">Org.nr: 880531-7958</p>
