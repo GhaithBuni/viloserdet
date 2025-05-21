@@ -1,33 +1,11 @@
 "use client";
-import { MoveLeft, MoveRight } from "lucide-react";
+
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
-import { StarRating } from "./components/StarRating";
 
-const SwiperNavButtons = () => {
-  const swiper = useSwiper();
-
-  return (
-    <div className="flex justify-end mt-6 space-x-4">
-      <button
-        onClick={() => swiper.slidePrev()}
-        className="p-2 rounded-full bg-[#DEB82D] text-white hover:bg-[#c7a227] transition-all"
-      >
-        <MoveLeft size={24} />
-      </button>
-      <button
-        onClick={() => swiper.slideNext()}
-        className="p-2 rounded-full bg-[#DEB82D] text-white hover:bg-[#c7a227] transition-all"
-      >
-        <MoveRight size={24} />
-      </button>
-    </div>
-  );
-};
+import { Reviews } from "./components/Reviews";
 
 const tips = [
   {
@@ -111,7 +89,7 @@ export default function Home() {
       {/* Våra Tjänster Section */}
       <section id="services" className="container mx-auto px-6 py-24">
         <h2 className="text-4xl md:text-6xl font-bold text-black mb-16 text-left relative after:block after:w-full  after:h-1 after:bg-[#DEB82D] after:mt-2">
-          VÅRA TJÄNSTER
+          Våra tjänster
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -258,112 +236,13 @@ export default function Home() {
       </div>
 
       {/* Vad sa de om oss (Google Reviews) */}
+
       <section className="container mx-auto px-6 py-24">
         <h2 className="text-4xl md:text-6xl font-bold text-black mb-12 text-left after:block after:w-full after:h-1 after:bg-[#DEB82D] after:mt-2">
           Vad sa de om oss
         </h2>
 
-        <Swiper
-          slidesPerView={1}
-          spaceBetween={30}
-          pagination={{ clickable: true }}
-          breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          modules={[Pagination]}
-          className="mySwiper"
-        >
-          {[
-            {
-              content:
-                "Otroligt bra service. Har bokat både flytthjälp och flyttstädning. Är supernöjd och rekommenderar varmt att man bokar med vilöserdet!",
-              name: "Naz Omar",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/TU8uE8RZKx7HRWf58",
-            },
-            {
-              content:
-                "Jättetrevliga ”flyttkarlar”! Vänliga och väldigt snabba, men oxå noggranna! De slår in alla viktiga, ömtåliga saker och skyddar dem under flytt. Väldigt bra pris oxå!!👍👍 / Nöjd kund Camilla i Uppsala! …",
-              name: "Camilla Karlberg",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/RYwSGzfUfek6uLSg7",
-            },
-            {
-              content:
-                "Väldigt effektiv ch bra service. Flyttkillarna var jättetrevliga och snabba. De säkerställde att alla möblerna kom hem utan skador. Rekommenderas!",
-              name: "Jacaranda Perez",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/dizYy7TULMCP8k2U6",
-            },
-            {
-              content:
-                "Jättetrevliga, bra pris och det blev inga anmärkningar. Rekommenderas starkt",
-              name: "isak islamovic",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/2xbHQYf1U2XhyzXE7",
-            },
-            {
-              content:
-                "Imponerande städning. Det var några få besiktningsanmärkningar som behövde åtgärdas och av dessa så var det en som missades vid återstädningen också. Men det kan vara pga bristfällig kommunikation.Generellt sett väldigt gärna prisvärt och jag är nöjd. Firman har varit väldigt serviceinriktade och ger en gedigen information om vad som gäller.",
-              name: "Tom Järn",
-              rating: 4,
-              googleUrl: "https://maps.app.goo.gl/dewwraWNyJ6tgFb4A",
-            },
-            {
-              content:
-                "Super! Första städningen vart inte godkänd men dom kom omedelbart och löste det. Super bra service och riktigt bra pris. Kommer definitivt anlita dom igen i framtiden 🙂 …",
-              name: "Alfred Englund",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/dYwpMhQenj4UxgpU9",
-            },
-            {
-              content:
-                "Framförallt ett bra jobb men också ärliga, flexibla och var lätta att prata med. Kommer använda deras tjänst igen nästa gång det ska flyttas!",
-              name: "Tomas Zerufael",
-              rating: 5,
-              googleUrl: "https://maps.app.goo.gl/Ar3K5YqMM1SA7kZq8",
-            },
-          ].map((review, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className={`p-8 rounded-xl shadow-lg transition-all duration-300 ${
-                  index % 2 === 0
-                    ? "bg-white text-black"
-                    : "bg-white text-black"
-                }`}
-              >
-                {/* Quote Icon */}
-                <div className="mb-4">
-                  <Image
-                    src="/quoteIcon.svg" // Replace with your actual quote icon path
-                    alt="Quote Icon"
-                    width={40}
-                    height={40}
-                  />
-                </div>
-
-                {/* Review Content */}
-                <p className="text-lg leading-relaxed">"{review.content}"</p>
-                {/* Star Rating */}
-                <StarRating
-                  count={review.rating}
-                  googleUrl={review.googleUrl}
-                />
-
-                {/* Reviewer Info */}
-                <div className="flex items-center mt-4">
-                  <div className="ml-4">
-                    <h3 className="text-lg font-bold">{review.name}</h3>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-
-          {/* Add Navigation Buttons */}
-          <SwiperNavButtons />
-        </Swiper>
+        <Reviews />
       </section>
     </main>
   );
