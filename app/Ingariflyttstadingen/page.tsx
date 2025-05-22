@@ -222,7 +222,7 @@ const Page = () => {
         </section>
       </div>
       <div className="flex justify-end p-4 container mx-auto">
-        <a href="/visningstadning" className="w-full md:w-[400px]">
+        <a href="/flyttstad" className="w-full md:w-[400px]">
           <button className="w-full text-lg font-semibold py-4 rounded-lg shadow-md flex items-center justify-center transition bg-[#0D3F53] text-white hover:bg-[#0A2E3D]">
             Boka flyttstädning
           </button>
