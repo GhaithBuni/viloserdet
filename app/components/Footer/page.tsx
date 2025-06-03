@@ -94,7 +94,9 @@ const Footer = () => {
           </div>
           <p className="text-sm text-gray-200">Org.nr: 880531-7958</p>
           <p className="text-sm text-gray-200">info@viloserdet.se</p>
-          <p className="text-sm text-gray-200">0722677774</p>
+          <a href="tel:+46105558893" className="text-sm text-gray-200">
+            010-555 88 93
+          </a>
         </div>
       </div>
 
