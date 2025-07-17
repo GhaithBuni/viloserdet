@@ -232,26 +232,26 @@ const BookingForm: React.FC<BookingFormProps> = ({
                   readOnly
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-[#DEB82D] outline-none cursor-pointer"
                   placeholder="Välj datum"
-                  value={
-                    formik.values.movingDay
-                      ? new Date(formik.values.movingDay)
-                          .toISOString()
-                          .split("T")[0]
-                      : ""
-                  }
+                  value={formik.values.movingDay || ""}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)} // Toggle calendar visibility
                 />
                 {isCalendarOpen && (
                   <div className="mt-2">
                     <Calendar
-                      value={
-                        formik.values.movingDay
-                          ? new Date(formik.values.movingDay)
-                          : null
-                      }
+                      value={formik.values.movingDay || ""}
                       onChange={(date) => {
-                        formik.setFieldValue("movingDay", date);
-                        setIsCalendarOpen(false); // Close calendar after selecting a date
+                        if (date instanceof Date) {
+                          const formatted = `${date.getFullYear()}-${(
+                            date.getMonth() + 1
+                          )
+                            .toString()
+                            .padStart(
+                              2,
+                              "0"
+                            )}-${date.getDate().toString().padStart(2, "0")}`;
+                          formik.setFieldValue("movingDay", formatted);
+                          setIsCalendarOpen(false);
+                        }
                       }}
                       minDate={new Date()} // Add minimum date
                       tileDisabled={({ date }) => {

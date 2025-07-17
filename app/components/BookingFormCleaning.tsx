@@ -187,14 +187,20 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
                     {isCalendarOpen && (
                       <div className="mt-2">
                         <Calendar
-                          value={
-                            formik.values.movingDay
-                              ? new Date(formik.values.movingDay)
-                              : null
-                          }
+                          value={formik.values.movingDay || ""}
                           onChange={(date) => {
-                            formik.setFieldValue("movingDay", date);
-                            setIsCalendarOpen(false); // Close calendar after selecting a date
+                            if (date instanceof Date) {
+                              const formatted = `${date.getFullYear()}-${(
+                                date.getMonth() + 1
+                              )
+                                .toString()
+                                .padStart(
+                                  2,
+                                  "0"
+                                )}-${date.getDate().toString().padStart(2, "0")}`;
+                              formik.setFieldValue("movingDay", formatted);
+                              setIsCalendarOpen(false);
+                            }
                           }}
                           minDate={new Date()} // This sets minimum date to today
                           tileDisabled={({ date }) => {
