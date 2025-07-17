@@ -294,14 +294,6 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
         </div>
         {error && <div className="text-red-500 mt-4">{error}</div>}{" "}
       </form>
-      <button
-        onClick={() => {
-          console.log("Raw movingDay:", formik.values.movingDay);
-          console.log("ISO:", new Date(formik.values.movingDay).toISOString());
-        }}
-      >
-        Debug
-      </button>
     </div>
   );
 };
