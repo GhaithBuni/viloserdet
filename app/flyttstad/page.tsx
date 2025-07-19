@@ -32,6 +32,8 @@ const Page = () => {
   const [diskmaskin, setDiskmaskin] = useState<boolean>(false);
   const [tvattmaskin, setTvattmaskin] = useState<boolean>(false);
   const [torktumlare, setTorktumlare] = useState<boolean>(false);
+  const [discountedPrice, setDiscountedPrice] = useState<number>(0);
+
   const { fetchPrice, loadingPrice, errorData, fetchSuccess } =
     useFetchCleanPrice(); // ✅ Get the function and loading state
 
@@ -67,6 +69,9 @@ const Page = () => {
       );
       if (response.data.valid) {
         setDiscountPercentage(response.data.percentage);
+        setTotalPrice(totalPrice * (1 - response.data.percentage / 100));
+        setDiscountedPrice(totalPrice * (response.data.percentage / 100));
+
         console.log(`✅ Rabatt tillämpas ${discountPercentage}%`);
       }
     } catch (error) {
@@ -113,9 +118,7 @@ const Page = () => {
     return false;
   };
   finalTotalPrice =
-    (discountPercentage > 0
-      ? totalPrice * (1 - discountPercentage / 100) // Apply discount only to totalPrice
-      : totalPrice) +
+    totalPrice +
     persienner * Prices.Persienner +
     (extraBadrum === "Ja" ? Prices.ExtraBadrum : 0) +
     (extraToalett === "Ja" ? Prices.ExtraToalett : 0) +
@@ -511,10 +514,7 @@ const Page = () => {
                   {discountPercentage > 0 && (
                     <p className="flex justify-between text-red-600 font-semibold">
                       <span>Rabatt</span>
-                      <span>
-                        -{(totalPrice * (discountPercentage / 100)).toFixed(2)}{" "}
-                        kr
-                      </span>
+                      <span>-{discountedPrice.toFixed(2)} kr</span>
                     </p>
                   )}
 
@@ -589,6 +589,7 @@ const Page = () => {
               <BookingFormCleaning
                 adress={adress}
                 finalTotalPrice={finalTotalPrice}
+                totalPrice={totalPrice}
                 rabattKod={rabattKod}
                 rabattPercentage={discountPercentage}
                 persienner={persienner.toString()}
@@ -602,6 +603,7 @@ const Page = () => {
                 diskmaskin={diskmaskin}
                 tvattmaskin={tvattmaskin}
                 torktumlare={torktumlare}
+                discountedPrice={discountedPrice}
               />
             </>
           )}

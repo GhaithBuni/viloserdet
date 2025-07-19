@@ -31,6 +31,7 @@ interface BookingData {
   selectedAssembly?: string | null;
   selectedDisposal?: string | null;
   selectedCleaning?: string | null;
+  cleaningPrice?: number;
 }
 
 interface Booking {
@@ -64,6 +65,7 @@ interface Booking {
   selectedAssembly?: string | null;
   selectedDisposal?: string | null;
   selectedCleaning?: string | null;
+  cleaningPrice?: number;
 }
 
 const useBooking = () => {

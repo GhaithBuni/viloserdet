@@ -24,6 +24,8 @@ interface BookingFormCleaningProps {
   diskmaskin: boolean;
   tvattmaskin: boolean;
   torktumlare: boolean;
+  totalPrice?: number; // Optional prop for total price
+  discountedPrice?: number; // Optional prop for discounted price
 }
 
 export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
@@ -42,6 +44,8 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
   diskmaskin,
   tvattmaskin,
   torktumlare,
+  totalPrice, // Optional prop for total price
+  discountedPrice, // Optional prop for discounted price
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -67,6 +71,8 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
   const handleBooking = async (values: typeof formik.values) => {
     const bookingData = {
       ...values,
+      movingDay: new Date(values.movingDay).toISOString().split("T")[0],
+
       adress,
       finalTotalPrice,
       rabattKod,
@@ -82,6 +88,8 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
       diskmaskin,
       tvattmaskin,
       torktumlare,
+      totalPrice,
+      discountedPrice, // Include discounted price if available
     };
 
     await addBooking(bookingData);
@@ -186,21 +194,26 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
                     {isCalendarOpen && (
                       <div className="mt-2">
                         <Calendar
-                          value={
-                            formik.values.movingDay
-                              ? new Date(formik.values.movingDay)
-                              : null
-                          }
+                          value={formik.values.movingDay || ""}
                           onChange={(date) => {
-                            formik.setFieldValue("movingDay", date);
-                            setIsCalendarOpen(false); // Close calendar after selecting a date
+                            if (date instanceof Date) {
+                              const formatted = `${date.getFullYear()}-${(
+                                date.getMonth() + 1
+                              )
+                                .toString()
+                                .padStart(
+                                  2,
+                                  "0"
+                                )}-${date.getDate().toString().padStart(2, "0")}`;
+                              formik.setFieldValue("movingDay", formatted);
+                              setIsCalendarOpen(false);
+                            }
                           }}
-                          minDate={new Date()} // This sets minimum date to today
+                          minDate={new Date()} // Add minimum date
                           tileDisabled={({ date }) => {
                             const today = new Date();
                             today.setHours(0, 0, 0, 0);
 
-                            // Check if date is in the past or is locked
                             return (
                               date < today ||
                               lockedDates.some(

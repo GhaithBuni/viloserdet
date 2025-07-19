@@ -123,6 +123,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   ]);
   const [keyHandling, setKeyHandling] = useState<string>("Vi öppnar åt er");
   const [showExtraServices, setShowExtraServices] = useState(true);
+  const [discountedPrice, setDiscountedPrice] = useState<number>(0);
   let finalTotalPrice: number = 0;
   const { fetchPrice, loadingPrice, errorData, fetchSuccess } = useFetchPrice(); // ✅ Get the function and loading state
 
@@ -166,7 +167,9 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
       );
       if (response.data.valid) {
         setDiscountPercentage(response.data.percentage);
-        console.log(`✅ Rabatt tillämpas ${discountPercentage}%`);
+        setTotalPrice(totalPrice * (1 - response.data.percentage / 100));
+        setDiscountedPrice(totalPrice * (response.data.percentage / 100));
+        console.log(`✅ Rabatt tillämpas ${response.data.percentage}%`);
       }
     } catch (error) {
       console.error("Error applying discount:", error);
@@ -198,16 +201,15 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
     });
   };
   finalTotalPrice =
-    (discountPercentage > 0
-      ? totalPrice * (1 - discountPercentage / 100) // Apply discount only to totalPrice
-      : totalPrice) +
+    totalPrice +
     (selectedPacking === "Ja"
       ? packingOption === "Bara Kök"
         ? packgingPrice * 0.4
         : packgingPrice
       : 0) +
     (selectedDisposal === "Ja" ? furniturePrice : 0) +
-    (selectedCleaning === "Ja" ? cleaningPrice : 0);
+    (selectedCleaning === "Ja" ? cleaningPrice * 0.85 : 0); // Apply 15% discount
+
   if (selectedFurniture["Tungt"]) {
     finalTotalPrice += 600 * selectedFurniture["Tungt"];
   }
@@ -390,9 +392,16 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
 
           {/* Show Cleaning price if selected */}
           {selectedCleaning === "Ja" && (
-            <p className="flex justify-between text-green-600 font-semibold">
-              <span>Flyttstäd</span> <span>{cleaningPrice} kr</span>
-            </p>
+            <div className="flex flex-col text-green-600 font-semibold">
+              <div className="flex justify-between">
+                <span>Flyttstäd (Ordinarie pris)</span>
+                <span className="line-through">{cleaningPrice} kr</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Flyttstäd (Efter 15% rabatt)</span>
+                <span>{(cleaningPrice * 0.85).toFixed(0)} kr</span>
+              </div>
+            </div>
           )}
 
           {/* Show Tungt and Piano prices if selected */}
@@ -413,9 +422,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           {discountPercentage > 0 && (
             <p className="flex justify-between text-red-600 font-semibold">
               <span>FlyttHäjlp Rabatt</span>
-              <span>
-                -{(totalPrice * (discountPercentage / 100)).toFixed(2)} kr
-              </span>
+              <span>-{discountedPrice.toFixed(2)} kr</span>
             </p>
           )}
 
@@ -587,6 +594,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           selectedCleaning={selectedCleaning}
           selectedDisposal={selectedDisposal}
           totalPrice={finalTotalPrice}
+          basePrice={totalPrice}
           rabattKod={rabattKod}
           rutChecked={rutChecked}
           setRutChecked={setRutChecked}
@@ -598,6 +606,10 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           keyHandling={[keyHandling]}
           selectedStorage={selectedStorage}
           storageDate={storageDate}
+          cleaningPrice={cleaningPrice}
+          packgingPrice={packgingPrice}
+          furniturePrice={furniturePrice}
+          discountedPrice={discountedPrice}
         />
       </div>
     </>

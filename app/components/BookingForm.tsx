@@ -54,6 +54,12 @@ interface BookingFormProps {
   keyHandling: string[];
   selectedStorage: string; // Added this property
   storageDate: Date | null;
+  cleaningPrice: number;
+  basePrice?: number; // Optional base price for the booking
+  packgingPrice?: number; // Optional packing price for the booking
+  furniturePrice?: number; // Optional furniture price for the booking
+  discountedPrice?: number; // Optional discounted price for the booking
+
   // packgingPrice: number;
   // setPackgingPrice: (count: number) => void;
   // furniturePrice: number;
@@ -84,6 +90,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   selectedDisposal,
   selectedCleaning,
   totalPrice,
+  cleaningPrice,
   rabattKod,
   selectedFurniture,
   furnitureCategories,
@@ -94,6 +101,10 @@ const BookingForm: React.FC<BookingFormProps> = ({
   keyHandling,
   selectedStorage,
   storageDate,
+  basePrice,
+  packgingPrice,
+  furniturePrice,
+  discountedPrice,
 }) => {
   const { addBooking, loading, error, success } = useBooking(); // Use the booking hook
   const router = useRouter(); // ✅ Initialize router
@@ -123,6 +134,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const handleBooking = async (values: typeof formData) => {
     const bookingData = {
       ...values,
+      movingDay: new Date(values.movingDay).toISOString().split("T")[0],
       totalPrice,
       rabattKod,
       zip,
@@ -150,6 +162,11 @@ const BookingForm: React.FC<BookingFormProps> = ({
       keyHandling,
       selectedStorage,
       storageDate,
+      cleaningPrice,
+      basePrice,
+      packgingPrice,
+      furniturePrice,
+      discountedPrice,
     };
 
     await addBooking(bookingData);
@@ -240,14 +257,20 @@ const BookingForm: React.FC<BookingFormProps> = ({
                 {isCalendarOpen && (
                   <div className="mt-2">
                     <Calendar
-                      value={
-                        formik.values.movingDay
-                          ? new Date(formik.values.movingDay)
-                          : null
-                      }
+                      value={formik.values.movingDay || ""}
                       onChange={(date) => {
-                        formik.setFieldValue("movingDay", date);
-                        setIsCalendarOpen(false); // Close calendar after selecting a date
+                        if (date instanceof Date) {
+                          const formatted = `${date.getFullYear()}-${(
+                            date.getMonth() + 1
+                          )
+                            .toString()
+                            .padStart(
+                              2,
+                              "0"
+                            )}-${date.getDate().toString().padStart(2, "0")}`;
+                          formik.setFieldValue("movingDay", formatted);
+                          setIsCalendarOpen(false);
+                        }
                       }}
                       minDate={new Date()} // Add minimum date
                       tileDisabled={({ date }) => {

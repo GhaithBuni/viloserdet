@@ -7,9 +7,7 @@ interface BookingData {
   email: string;
   phone: string;
   movingDay: string;
-
   adress: string;
-
   message: string;
   finalTotalPrice: number;
   rabattKod: string;

@@ -574,6 +574,7 @@ const Page = () => {
                 diskmaskin={diskmaskin}
                 tvattmaskin={tvattmaskin}
                 torktumlare={torktumlare}
+                totalPrice={totalPrice}
               />
             </>
           )}

@@ -23,6 +23,7 @@ interface BookingFormCleaningProps {
   diskmaskin: boolean;
   tvattmaskin: boolean;
   torktumlare: boolean;
+  totalPrice: number;
 }
 
 export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
@@ -41,6 +42,7 @@ export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
   diskmaskin,
   tvattmaskin,
   torktumlare,
+  totalPrice,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -66,6 +68,8 @@ export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
   const handleBooking = async (values: typeof formik.values) => {
     const bookingData = {
       ...values,
+      movingDay: new Date(values.movingDay).toISOString().split("T")[0],
+
       adress,
       finalTotalPrice,
       rabattKod,
@@ -81,6 +85,7 @@ export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
       diskmaskin,
       tvattmaskin,
       torktumlare,
+      totalPrice,
     };
 
     await addBookingVisning(bookingData);
@@ -185,14 +190,20 @@ export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
                     {isCalendarOpen && (
                       <div className="mt-2">
                         <Calendar
-                          value={
-                            formik.values.movingDay
-                              ? new Date(formik.values.movingDay)
-                              : null
-                          }
+                          value={formik.values.movingDay || ""}
                           onChange={(date) => {
-                            formik.setFieldValue("movingDay", date);
-                            setIsCalendarOpen(false); // Close calendar after selecting a date
+                            if (date instanceof Date) {
+                              const formatted = `${date.getFullYear()}-${(
+                                date.getMonth() + 1
+                              )
+                                .toString()
+                                .padStart(
+                                  2,
+                                  "0"
+                                )}-${date.getDate().toString().padStart(2, "0")}`;
+                              formik.setFieldValue("movingDay", formatted);
+                              setIsCalendarOpen(false);
+                            }
                           }}
                           minDate={new Date()} // Add minimum date
                           tileDisabled={({ date }) => {
