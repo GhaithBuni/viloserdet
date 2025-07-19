@@ -180,9 +180,9 @@ export const BookingFormVisning: React.FC<BookingFormCleaningProps> = ({
                       placeholder="Välj datum"
                       value={
                         formik.values.movingDay
-                          ? new Date(
-                              formik.values.movingDay
-                            ).toLocaleDateString()
+                          ? new Date(formik.values.movingDay)
+                              .toISOString()
+                              .split("T")[0]
                           : ""
                       }
                       onClick={() => setIsCalendarOpen(!isCalendarOpen)} // Toggle calendar visibility

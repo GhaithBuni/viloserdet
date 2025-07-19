@@ -71,8 +71,6 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
   const handleBooking = async (values: typeof formik.values) => {
     const bookingData = {
       ...values,
-      movingDay: new Date(values.movingDay).toISOString().split("T")[0],
-
       adress,
       finalTotalPrice,
       rabattKod,
@@ -184,9 +182,9 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
                       placeholder="Välj datum"
                       value={
                         formik.values.movingDay
-                          ? new Date(
-                              formik.values.movingDay
-                            ).toLocaleDateString()
+                          ? new Date(formik.values.movingDay)
+                              .toISOString()
+                              .split("T")[0]
                           : ""
                       }
                       onClick={() => setIsCalendarOpen(!isCalendarOpen)} // Toggle calendar visibility

@@ -134,7 +134,6 @@ const BookingForm: React.FC<BookingFormProps> = ({
   const handleBooking = async (values: typeof formData) => {
     const bookingData = {
       ...values,
-      movingDay: new Date(values.movingDay).toISOString().split("T")[0],
       totalPrice,
       rabattKod,
       zip,
@@ -247,11 +246,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                   readOnly
                   className="w-full p-3 border rounded-md focus:ring-2 focus:ring-[#DEB82D] outline-none cursor-pointer"
                   placeholder="Välj datum"
-                  value={
-                    formik.values.movingDay
-                      ? new Date(formik.values.movingDay).toLocaleDateString()
-                      : ""
-                  }
+                  value={formik.values.movingDay || ""}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)} // Toggle calendar visibility
                 />
                 {isCalendarOpen && (
