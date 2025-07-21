@@ -99,7 +99,7 @@ export const BookingFormCleaning: React.FC<BookingFormCleaningProps> = ({
     const fetchLockedDates = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/locked-dates`
+          `${process.env.NEXT_PUBLIC_API_URL}/clean-Dates`
         ); // Fetch locked dates from API
 
         setLockedDates(response.data.map((date: string) => new Date(date))); // Convert to Date objects
