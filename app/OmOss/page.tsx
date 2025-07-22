@@ -121,10 +121,6 @@ const page = async () => {
 
         {/* Våra Tjänster Section */}
         <section id="services" className="container mx-auto px-6 py-24">
-          <h2 className="text-4xl md:text-6xl font-bold text-black mb-16 text-left relative after:block after:w-full after:h-1 after:bg-[#DEB82D] after:mt-2">
-            {content.services?.sectionTitle}
-          </h2>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {content.services?.servicesList?.map(
               (service: SanityServiceItem, index: number) => (

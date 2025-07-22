@@ -10,10 +10,11 @@ export const metadata: Metadata = {
   description:
     "Professional and reliable cleaning and moving services tailored to your needs. Serving homes and businesses with care, speed, and efficiency.",
   icons: {
-    icon: "/logo.svg",
+    icon: "/favicon.ico",
     shortcut: "/logo.svg",
-    apple: "/logo.svg",
+    apple: "/apple-icon.png",
   },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
