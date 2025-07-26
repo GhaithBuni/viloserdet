@@ -3,6 +3,9 @@ import omOss from "./omOss";
 import Ingariflytthjalp from "./Ingariflytthjalp";
 import Ingariflyttstadingen from "./Ingariflyttstadingen";
 import Ingarivisningsstadning from "./Ingarivisningsstadning";
+import Kontakt from "./Kontakt";
+import Tipsinforflytt from "./Tipsinforflytt";
+import LandingPage from "./landingPage";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -10,6 +13,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Ingariflytthjalp,
     Ingariflyttstadingen,
     Ingarivisningsstadning,
+    Kontakt,
+    Tipsinforflytt,
+    LandingPage,
   ],
 };
 export const schemaTypes = [
@@ -17,4 +23,7 @@ export const schemaTypes = [
   Ingariflytthjalp,
   Ingariflyttstadingen,
   Ingarivisningsstadning,
+  Kontakt,
+  Tipsinforflytt,
+  LandingPage,
 ];
