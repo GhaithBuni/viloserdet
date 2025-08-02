@@ -4,6 +4,7 @@ import Script from "next/script"; // ✅ Import GA Script
 import "./globals.css";
 import ClientLayout from "./components/ClientLayout";
 import Analytics from "./components/Analytics"; // ✅ This is the client component you'll add
+import Footer from "./components/Footer/page";
 
 const ptSans = PT_Sans({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -53,6 +54,7 @@ export default function RootLayout({
           </>
         )}
         <ClientLayout>{children}</ClientLayout>
+        <Footer />
       </body>
     </html>
   );

@@ -1,5 +1,3 @@
-import { types } from "util";
-
 const Ingariflyttstadingen = {
   name: "Ingariflyttstadingen",
   title: "Ingariflyttstadingen",

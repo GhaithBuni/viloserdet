@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { FaInstagram, FaTiktok, FaFacebookF } from "react-icons/fa";
 import Image from "next/image";
+import { url } from "inspector";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +72,7 @@ const NavBar = () => {
             { name: "Tips inför flytt", url: "/Tipsinforflytt" },
             { name: "Kontakt", url: "/Kontakt" },
             { name: "Om oss", url: "/OmOss" },
+            { name: "FAQ", url: "/FAQ" },
           ].map((link, index) => (
             <a
               key={index}
@@ -220,6 +222,7 @@ const NavBar = () => {
             { name: "Tips inför flytt", url: "/Tipsinforflytt" },
             { name: "Kontakt", url: "/Kontakt" },
             { name: "Om oss", url: "/OmOss" },
+            { name: "FAQ", url: "/faq" },
           ].map((link, index) => (
             <a
               key={index}

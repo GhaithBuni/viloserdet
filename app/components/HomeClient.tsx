@@ -101,10 +101,11 @@ export default function HomeClient({
           <Image
             src="/WaveLine.svg"
             alt="Wave Line Decoration"
-            layout="responsive"
             width={1440}
             height={200}
-            className="w-full opacity-80"
+            sizes="100vw" // tells the browser this image will take full viewport width
+            className="w-full h-auto opacity-80" // ensure correct scaling
+            priority // optional: if it's critical for above-the-fold
           />
         </div>
       </section>

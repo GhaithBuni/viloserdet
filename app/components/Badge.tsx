@@ -1,3 +1,4 @@
+"use client";
 import { ReactGoogleReviews } from "react-google-reviews";
 import "react-google-reviews/dist/index.css";
 

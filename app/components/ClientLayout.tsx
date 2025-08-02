@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import NavBar from "./Nav/NavBar";
-import Footer from "./Footer/page";
 
 export default function ClientLayout({
   children,
@@ -16,7 +15,6 @@ export default function ClientLayout({
     <>
       {!isStudioRoute && <NavBar />}
       <main className="flex-grow">{children}</main>
-      {!isStudioRoute && <Footer />}
     </>
   );
 }

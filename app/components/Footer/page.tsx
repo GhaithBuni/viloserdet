@@ -1,11 +1,11 @@
-"use client";
-
 import React from "react";
 import { FaTiktok, FaFacebookF } from "react-icons/fa";
 import Image from "next/image";
-
-const Footer = () => {
+import { client } from "@/sanity/lib/client";
+export const dynamic = "force-dynamic";
+const Footer = async () => {
   const year = new Date().getFullYear();
+  const content = await client.fetch(`*[_type == "footer"][0]`);
 
   return (
     <footer className="bg-[#0D3F53] text-white py-8 md:py-10">
@@ -20,10 +20,9 @@ const Footer = () => {
             className="h-16 lg:h-20 xl:h-24 opacity-90"
           />
           <div>
-            <h2 className="text-2xl font-bold">VILÖSERDET</h2>
+            <h2 className="text-2xl font-bold">{content?.title}</h2>
             <p className="text-sm text-gray-200 mt-2 max-w-xs">
-              Vi är en full-service flytt&städfirma. Vårt uppdrag är att erbjuda
-              dig de bästa tjänsterna till de bästa priserna.
+              {content?.subtitle}
             </p>
           </div>
         </div>
@@ -56,6 +55,11 @@ const Footer = () => {
               <li>
                 <a href="/OmOss" className="hover:text-[#deb82d]">
                   Om oss
+                </a>
+              </li>
+              <li>
+                <a href="/FAQ" className="hover:text-[#deb82d]">
+                  FAQ
                 </a>
               </li>
               <li>
@@ -92,10 +96,13 @@ const Footer = () => {
               <FaFacebookF />
             </a>
           </div>
-          <p className="text-sm text-gray-200">Org.nr: 880531-7958</p>
-          <p className="text-sm text-gray-200">info@viloserdet.se</p>
-          <a href="tel:+46105558893" className="text-sm text-gray-200">
-            010-555 88 93
+          <p className="text-sm text-gray-200">{content?.orgNumber}</p>
+          <p className="text-sm text-gray-200">{content?.contactEmail}</p>
+          <a
+            href={`tel:${content?.phoneNumber}`}
+            className="text-sm text-gray-200"
+          >
+            {content?.phoneNumber}
           </a>
         </div>
       </div>
