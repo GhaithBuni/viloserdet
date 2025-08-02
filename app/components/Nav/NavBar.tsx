@@ -222,7 +222,7 @@ const NavBar = () => {
             { name: "Tips inför flytt", url: "/Tipsinforflytt" },
             { name: "Kontakt", url: "/Kontakt" },
             { name: "Om oss", url: "/OmOss" },
-            { name: "FAQ", url: "/faq" },
+            { name: "FAQ", url: "/FAQ" },
           ].map((link, index) => (
             <a
               key={index}
