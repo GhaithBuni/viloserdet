@@ -6,36 +6,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { Reviews } from "./Reviews";
+import InfoPanel from "./InfoPanel";
 
-const tips = [
-  {
-    title: "Tips för Att Hålla Köket Rent",
-    text: "Skötsel av Din Ugn Efter Flyttstädning. Att regelbundet underhålla och rengöra din ugn är inte bara viktigt för att hålla den i gott skick, utan även för din hälsa. Här är våra bästa tips och råd för att hjälpa dig med detta. Varför är det viktigt att hålla ugnen ren? Hälsa: En smutsig ugn kan avge skadliga ångor när matrester och fett bränns upp. Detta kan påverka luftkvaliteten i ditt hem och din allmänna hälsa.Matkvalitet: Gamla matrester kan påverka smaken på dina nya maträtter negativt. En ren ugn säkerställer att dina rätter smakar som de ska.Livslängd: Regelbundet underhåll kan förlänga ugnens livslängd genom att förebygga slitage och tekniska problem",
-  },
-  {
-    title: "Steg för att hålla ugnen ren",
-    text: `
-    1. Rengör regelbundet  
-    - Efter varje användning: Torka av spill när ugnen svalnat med en fuktig trasa eller svamp  
-    - Veckovis: Ta ut galler och plåtar, rengör med varmt vatten och diskmedel  
-    - Använd ugnsspray för insidan, följ instruktionerna på flaskan  
-    
-    2. Djuprengöring en gång i månaden  
-    - Bikarbonat och ättika: Blanda bikarbonat med vatten till en pasta, smeta på ugnens insida  
-    - Låt stå över natten  
-    - Spreja ättika på pastan och torka rent med fuktig trasa  
-    - Har ugnen självrengöringsfunktion, följ tillverkarens instruktioner  
-    
-    3. Förebyggande åtgärder  
-    - Använd bakplåtspapper eller silikonmatta för att fånga spill och fett  
-    - Täck maten med lock eller folie för att undvika stänk vid tillagning  
-    `,
-  },
-  {
-    title: "Samarbeta med Flyttfirman",
-    text: "Ge tydlig information: Berätta för flyttfirman om eventuella särskilda behov, som tunga möbler, känsliga föremål eller parkeringsrestriktioner. Var tillgänglig på flyttdagen: Se till att någon är på plats för att svara på frågor och ge vägledning under flytten. Kontrollera efter flytten: Gå igenom alla lådor och möbler för att säkerställa att allt har kommit med och att inget har skadats under transporten.",
-  },
-];
 type Tip = { title: string; description: string };
 type Service = { title: string; subtitle: string; image: any; link?: string };
 type WhyUsFeature = { image: any; description: string };
@@ -60,6 +32,8 @@ export default function HomeClient({
       tipsList: Tip[];
     };
     reviewsTitle: string;
+    InfoPanelTitle: string;
+    InfoPanelContent: string;
   };
 }) {
   return (
@@ -83,17 +57,10 @@ export default function HomeClient({
             </a>
           </div>
 
-          {/* Right Side - Image (Hidden on Mobile, Above WaveLine on Desktop) */}
-
-          {/*<div className="relative w-full max-w-[1039px] md:flex md:justify-center hidden md:block z-10">
-            <Image 
-              src="/mainImage.svg" 
-              alt="Professional Cleaning" 
-              width={1039} 
-              height={612} 
-              className="rounded-lg shadow-lg w-full max-w-[90%] md:max-w-[1039px]"
-            />
-          </div> */}
+          <InfoPanel
+            title={content.InfoPanelTitle}
+            content={content.InfoPanelContent}
+          />
         </div>
 
         {/* Wave Line - ALWAYS Centered */}

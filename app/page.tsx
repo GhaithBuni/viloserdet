@@ -31,7 +31,9 @@ export default async function Page() {
         description
       }
     },
-    reviewsTitle
+    reviewsTitle,
+    InfoPanelTitle,
+    InfoPanelContent,
   }`);
 
   return <HomeClient content={data} />;

@@ -101,6 +101,8 @@ const landingPage = {
       ],
     },
     { name: "reviewsTitle", type: "string", title: "Recensioner Rubrik" },
+    { name: "InfoPanelTitle", type: "string", title: "Info Panel Rubrik" },
+    { name: "InfoPanelContent", type: "text", title: "Info Panel Innehåll" },
   ],
 };
 export default landingPage;
