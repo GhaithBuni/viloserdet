@@ -1,6 +1,7 @@
 // app/page.tsx
 import { client } from "@/sanity/lib/client";
 import HomeClient from "./components/HomeClient";
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const data = await client.fetch(`*[_type == "landingPage"][0]{
