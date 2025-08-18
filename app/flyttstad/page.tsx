@@ -5,7 +5,6 @@ import useFetchCleanPrice from "../hooks/UseFetchCleanPrice"; // Replace with th
 
 import axios from "axios"; // Import axios for API requests
 import { BookingFormCleaning } from "../components/BookingFormCleaning";
-import { url } from "inspector";
 
 const Page = () => {
   const [adress, setAdress] = useState("");
@@ -68,17 +67,25 @@ const Page = () => {
         { code: rabattKod }
       );
       if (response.data.valid) {
-        setDiscountPercentage(response.data.percentage);
-        setTotalPrice(totalPrice * (1 - response.data.percentage / 100));
-        setDiscountedPrice(totalPrice * (response.data.percentage / 100));
+        const newTotal = Math.round(
+          totalPrice * (1 - response.data.percentage / 100)
+        );
+        const discountValue = Math.round(
+          totalPrice * (response.data.percentage / 100)
+        );
 
-        console.log(`✅ Rabatt tillämpas ${discountPercentage}%`);
+        setDiscountPercentage(response.data.percentage);
+        setTotalPrice(newTotal);
+        setDiscountedPrice(discountValue);
+
+        console.log(`✅ Rabatt tillämpas ${response.data.percentage}%`);
       }
     } catch (error) {
       console.error("Error applying discount:", error);
       setDiscountError("Ogiltig eller utgången rabattkod.");
     }
   };
+
   const Prices = {
     Persienner: 100,
     ExtraBadrum: 300,
@@ -484,7 +491,7 @@ const Page = () => {
                   {inglasadDuschhörna === "Ja" && (
                     <p className="flex justify-between text-green-600 font-semibold">
                       <span>InglasadDuschhörna</span>{" "}
-                      <span>{Prices.ExtraToalett} kr</span>
+                      <span>{Prices.InglasadDuschhörna} kr</span>
                     </p>
                   )}
                   {insidanMaskiner === "Ja" && (

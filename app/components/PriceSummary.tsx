@@ -124,6 +124,19 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   const [keyHandling, setKeyHandling] = useState<string>("Vi öppnar åt er");
   const [showExtraServices, setShowExtraServices] = useState(true);
   const [discountedPrice, setDiscountedPrice] = useState<number>(0);
+  const [persienner, setPersienner] = useState<number>(0); // Change type to number with initial value 0
+  const [extraBadrum, setExtraBadrum] = useState<string>("Nej");
+  const [extraToalett, setExtraToalett] = useState<string>("Nej");
+  const [inglasadDuschhörna, setInglasadDuschhörna] = useState<string>("Nej");
+  const [insidanMaskiner, setInsidanMaskiner] = useState<string>("Nej");
+  const [diskmaskin, setDiskmaskin] = useState<boolean>(false);
+  const [tvattmaskin, setTvattmaskin] = useState<boolean>(false);
+  const [torktumlare, setTorktumlare] = useState<boolean>(false);
+  const [extraServicePrices, setExtraServicePrices] = useState<
+    Record<string, number>
+  >({});
+  const [loadingExtraServices, setLoadingExtraServices] =
+    useState<boolean>(true);
   let finalTotalPrice: number = 0;
   const { fetchPrice, loadingPrice, errorData, fetchSuccess } = useFetchPrice(); // ✅ Get the function and loading state
 
@@ -136,6 +149,24 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
   useEffect(() => {
     onShowToChange(showExtraServices);
   }, [showExtraServices, onShowToChange]);
+
+  useEffect(() => {
+    const fetchExtraServicePrices = async () => {
+      try {
+        setLoadingExtraServices(true);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/extra-services`
+        );
+        setExtraServicePrices(response.data);
+      } catch (error) {
+        console.error("Error fetching extra service prices:", error);
+      } finally {
+        setLoadingExtraServices(false);
+      }
+    };
+
+    fetchExtraServicePrices();
+  }, []);
 
   handleApplyDiscount = async () => {
     try {
@@ -221,6 +252,25 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
     finalTotalPrice = finalTotalPrice * 2; // Apply RUT deduction to the entire price
   }
 
+  if (selectedCleaning === "Ja") {
+    if (extraBadrum === "Ja") {
+      finalTotalPrice += extraServicePrices["extraBadrum"] || 0;
+    }
+    if (extraToalett === "Ja") {
+      finalTotalPrice += extraServicePrices["extraToalett"] || 0;
+    }
+    if (inglasadDuschhörna === "Ja") {
+      finalTotalPrice += extraServicePrices["inglasadDuschhörna"] || 0;
+    }
+    if (insidanMaskiner === "Ja") {
+      finalTotalPrice +=
+        (diskmaskin ? extraServicePrices["diskmaskin"] || 0 : 0) +
+        (tvattmaskin ? extraServicePrices["tvattmaskin"] || 0 : 0) +
+        (torktumlare ? extraServicePrices["torktumlare"] || 0 : 0);
+    }
+    finalTotalPrice += (extraServicePrices["persienner"] || 0) * persienner;
+  }
+
   return (
     <>
       {/* Back Button */}
@@ -291,7 +341,19 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
             {
               label: "Behöver du flyttstäd? Får du 15% Rabatt",
               state: selectedCleaning,
-              setState: setSelectedCleaning,
+              setState: (value: string) => {
+                setSelectedCleaning(value);
+                if (value === "Nej") {
+                  setPersienner(0);
+                  setExtraBadrum("Nej");
+                  setExtraToalett("Nej");
+                  setInglasadDuschhörna("Nej");
+                  setInsidanMaskiner("Nej");
+                  setDiskmaskin(false);
+                  setTvattmaskin(false);
+                  setTorktumlare(false);
+                }
+              },
             },
             {
               label: "Behöver du magasinering?",
@@ -350,9 +412,170 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
               />
             </div>
           )}
+          {selectedCleaning === "Ja" && (
+            <>
+              <div>
+                <div className="bg-[#F5F5F5] p-4 mb-4">
+                  <h2 className="text-2xl font-bold">
+                    Extra Tjänster (Flyttstäd)
+                  </h2>
+                </div>
+                <div className="flex flex-col gap-1">
+                  {[
+                    {
+                      label: "Persienner",
+                      component: (
+                        <div className="flex items-center gap-2">
+                          <button
+                            className={`px-4 py-2 rounded-lg text-white font-semibold bg-[#0D3F53]`}
+                            onClick={() =>
+                              setPersienner(Math.max(0, persienner - 1))
+                            }
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">{persienner}</span>
+                          <button
+                            className={`px-4 py-2 rounded-lg text-white font-semibold bg-[#0D3F53]`}
+                            onClick={() => setPersienner(persienner + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      ),
+                    },
+                    {
+                      label: "Extra badrum",
+                      state: extraBadrum,
+                      setState: setExtraBadrum,
+                    },
+                    {
+                      label: "Extra toalett",
+                      state: extraToalett,
+                      setState: setExtraToalett,
+                    },
+                    {
+                      label: "Inglasad duschhörna",
+                      state: inglasadDuschhörna,
+                      setState: setInglasadDuschhörna,
+                    },
+                    {
+                      label: "Insidan av vitvaror",
+                      state: insidanMaskiner,
+                      setState: (value: string) => {
+                        setInsidanMaskiner(value);
+                        if (value === "Nej") {
+                          setDiskmaskin(false);
+                          setTvattmaskin(false);
+                          setTorktumlare(false);
+                        }
+                      },
+                      extraContent: insidanMaskiner === "Ja" && (
+                        <div className="w-full mt-4">
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {[
+                              {
+                                title: "Diskmaskin",
+                                state: diskmaskin,
+                                setState: setDiskmaskin,
+                              },
+                              {
+                                title: "Tvättmaskin",
+                                state: tvattmaskin,
+                                setState: setTvattmaskin,
+                              },
+                              {
+                                title: "Torktumlare",
+                                state: torktumlare,
+                                setState: setTorktumlare,
+                              },
+                            ].map((appliance) => (
+                              <div
+                                key={appliance.title}
+                                onClick={() =>
+                                  appliance.setState(!appliance.state)
+                                }
+                                className={`p-3 rounded-lg cursor-pointer transition-all transform hover:scale-105 shadow-sm hover:shadow-md ${
+                                  appliance.state
+                                    ? "bg-[#0D3F53] text-white"
+                                    : "bg-gray-100 hover:bg-gray-200"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between space-x-2">
+                                  <span className="font-medium text-sm truncate">
+                                    {appliance.title}
+                                  </span>
+                                  <span className="text-sm whitespace-nowrap">
+                                    100 kr
+                                  </span>
+                                </div>
+                                <div className="mt-1 text-xs">
+                                  {appliance.state ? (
+                                    <div className="flex items-center gap-1">
+                                      <span>✓</span> Vald
+                                    </div>
+                                  ) : (
+                                    <span className="text-gray-600">
+                                      Klicka för att välja
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ),
+                    },
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col bg-[#FEF4E8] border rounded-lg p-4 shadow-lg"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium">{item.label}</span>
+                        {item.label === "Persienner" ? (
+                          item.component
+                        ) : (
+                          <div className="flex gap-2">
+                            <button
+                              className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                                item.state === "Ja"
+                                  ? "bg-[#0D3F53]"
+                                  : "bg-gray-300"
+                              }`}
+                              onClick={() =>
+                                item.setState && item.setState("Ja")
+                              }
+                            >
+                              Ja
+                            </button>
+                            <button
+                              className={`px-6 py-2 rounded-lg text-white font-semibold ${
+                                item.state === "Nej"
+                                  ? "bg-[#0D3F53]"
+                                  : "bg-gray-300"
+                              }`}
+                              onClick={() =>
+                                item.setState && item.setState("Nej")
+                              }
+                            >
+                              Nej
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      {item.extraContent && (
+                        <div className="mt-4 w-full">{item.extraContent}</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
         {/* Price Summary */}
-        <div className="bg-white p-6 border rounded-lg shadow-md mt-10">
+        <div className="bg-white p-6 border rounded-lg shadow-md mt-10 max-h-[650px]">
           <h3 className="text-xl font-bold mb-4">Prisuppgifter</h3>
           <div className="mb-3">
             <p className="flex justify-between">
@@ -424,6 +647,52 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
               <span>FlyttHäjlp Rabatt</span>
               <span>-{discountedPrice.toFixed(2)} kr</span>
             </p>
+          )}
+          {persienner > 0 && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>Persienner ({persienner} st)</span>
+              <span>{persienner * extraServicePrices.persienner} kr</span>
+            </p>
+          )}
+          {extraBadrum === "Ja" && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>Extra Badrum</span>{" "}
+              <span>{extraServicePrices.extraBadrum} kr</span>
+            </p>
+          )}
+          {extraToalett === "Ja" && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>ExtraToalett</span>{" "}
+              <span>{extraServicePrices.extraToalett} kr</span>
+            </p>
+          )}
+          {inglasadDuschhörna === "Ja" && (
+            <p className="flex justify-between text-green-600 font-semibold">
+              <span>InglasadDuschhörna</span>{" "}
+              <span>{extraServicePrices.inglasadDuschhörna} kr</span>
+            </p>
+          )}
+          {insidanMaskiner === "Ja" && (
+            <>
+              {diskmaskin && (
+                <p className="flex justify-between text-green-600 font-semibold">
+                  <span>Diskmaskin</span>
+                  <span>{extraServicePrices.diskmaskin} kr</span>
+                </p>
+              )}
+              {tvattmaskin && (
+                <p className="flex justify-between text-green-600 font-semibold">
+                  <span>Tvättmaskin</span>
+                  <span>{extraServicePrices.tvattmaskin} kr</span>
+                </p>
+              )}
+              {torktumlare && (
+                <p className="flex justify-between text-green-600 font-semibold">
+                  <span>Torktumlare</span>
+                  <span>{extraServicePrices.torktumlare} kr</span>
+                </p>
+              )}
+            </>
           )}
 
           {/* Rabattkod Input */}
@@ -610,6 +879,14 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
           packgingPrice={packgingPrice}
           furniturePrice={furniturePrice}
           discountedPrice={discountedPrice}
+          persienner={persienner.toString()}
+          extraBadrum={extraBadrum}
+          extraToalett={extraToalett}
+          inglasadDuschhörna={inglasadDuschhörna}
+          insidanMaskiner={insidanMaskiner}
+          diskmaskin={diskmaskin}
+          tvattmaskin={tvattmaskin}
+          torktumlare={torktumlare}
         />
       </div>
     </>

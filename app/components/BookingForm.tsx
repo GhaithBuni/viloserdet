@@ -59,6 +59,14 @@ interface BookingFormProps {
   packgingPrice?: number; // Optional packing price for the booking
   furniturePrice?: number; // Optional furniture price for the booking
   discountedPrice?: number; // Optional discounted price for the booking
+  persienner?: string; // Optional persienner price
+  extraBadrum?: string;
+  extraToalett?: string;
+  inglasadDuschhörna?: string;
+  insidanMaskiner?: string;
+  diskmaskin?: boolean;
+  tvattmaskin?: boolean;
+  torktumlare?: boolean;
 
   // packgingPrice: number;
   // setPackgingPrice: (count: number) => void;
@@ -105,6 +113,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
   packgingPrice,
   furniturePrice,
   discountedPrice,
+  persienner,
+  extraBadrum,
+  extraToalett,
+  inglasadDuschhörna,
+  insidanMaskiner,
+  diskmaskin,
+  tvattmaskin,
+  torktumlare,
 }) => {
   const { addBooking, loading, error, success } = useBooking(); // Use the booking hook
   const router = useRouter(); // ✅ Initialize router
@@ -166,6 +182,14 @@ const BookingForm: React.FC<BookingFormProps> = ({
       packgingPrice,
       furniturePrice,
       discountedPrice,
+      persienner,
+      extraBadrum,
+      extraToalett,
+      inglasadDuschhörna,
+      insidanMaskiner,
+      diskmaskin,
+      tvattmaskin,
+      torktumlare,
     };
 
     await addBooking(bookingData);
