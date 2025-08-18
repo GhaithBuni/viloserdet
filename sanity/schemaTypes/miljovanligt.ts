@@ -13,7 +13,8 @@ const miljovanligt = {
     {
       title: "Hållbarhet och Miljövänlig Beskrivning ",
       name: "HallbarhetOchMiljovanligBeskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       title: "Cyklar för en Grönare Framtid Title",
@@ -23,7 +24,8 @@ const miljovanligt = {
     {
       title: "Cyklar för en Grönare Framtid Beskrivning ",
       name: "CyklarForEnGronareFramtidBeskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       title: "Naturliga Städmedel Title",
@@ -33,7 +35,8 @@ const miljovanligt = {
     {
       title: "Naturliga Städmedel Beskrivning",
       name: "NaturligaStadmedelBeskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       title: "Miljövänlig Framtid Title",
@@ -43,7 +46,8 @@ const miljovanligt = {
     {
       title: "Miljövänlig Framtid Beskrivning",
       name: "MiljovanligFramtidBeskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       title: "Miljövänlig Framtid Beskrivning 2",
