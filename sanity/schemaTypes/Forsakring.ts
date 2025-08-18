@@ -25,7 +25,8 @@ const Forsakring = {
     },
     {
       name: "InsurancdEmployeesDes",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
       title: "Text Försäkring  Personal",
     },
     {
@@ -35,7 +36,8 @@ const Forsakring = {
     },
     {
       name: "InsuranceGoodsDes",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
       title: "Text Försäkring Gods",
     },
     {
@@ -45,7 +47,8 @@ const Forsakring = {
     },
     {
       name: "CollaborationSvedeaDes",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
       title: "Text Samarbete Svedea",
     },
     {

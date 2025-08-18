@@ -1,6 +1,11 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { PortableTextComponents } from "@portabletext/react";
+
 export const dynamic = "force-dynamic";
+
 type ServiceItem = {
   description: string;
 };
@@ -8,7 +13,32 @@ type ServiceItem1 = {
   Description: string;
 };
 
-const page = async () => {
+type PTValue = PortableTextBlock[] | string | null | undefined;
+
+const ptComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="text-base md:text-lg leading-7 whitespace-pre-line">
+        {children}
+      </p>
+    ),
+  },
+};
+
+// Helper for PortableText + fallback
+const PT: React.FC<{ value: PTValue }> = ({ value }) => {
+  if (!value) return null;
+  if (Array.isArray(value)) {
+    return <PortableText value={value} components={ptComponents} />;
+  }
+  return (
+    <p className="text-base md:text-lg leading-7 whitespace-pre-line">
+      {value}
+    </p>
+  );
+};
+
+const Page = async () => {
   const content = await client.fetch(`*[_type == "Ingarivisningsstadning"][0]`);
 
   return (
@@ -19,8 +49,8 @@ const page = async () => {
         </h2>
 
         <section className="space-y-4">
-          <p className="text-base md:text-lg">{content?.description}</p>
-          <p className="text-base md:text-lg">{content?.description2}</p>
+          {/* description now uses PortableText */}
+          <PT value={content?.description} />
         </section>
 
         <section className="bg-[#FEF4E8] p-4 md:p-6 rounded-md shadow-md space-y-4">
@@ -132,4 +162,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

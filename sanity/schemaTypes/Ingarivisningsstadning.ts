@@ -8,7 +8,12 @@ const Ingarivisningsstadning = {
       title: "Titel",
       type: "string",
     },
-    { name: "description", type: "text", title: "Beskrivning" },
+    {
+      name: "description",
+      type: "array",
+      of: [{ type: "block" }],
+      title: "Beskrivning",
+    },
     { name: "description2", type: "text", title: "Beskrivning 2" },
     {
       name: "IncludedServices",

@@ -1,5 +1,6 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
+import { PortableText } from "@portabletext/react";
 export const dynamic = "force-dynamic";
 
 const Page = async () => {
@@ -21,10 +22,9 @@ const Page = async () => {
             {content?.title}
           </h2>
 
-          <p className="text-base md:text-lg">
-            Välkommen till <strong>Vilöserdet Flytthjälp</strong>
-            {content?.subtitle}
-          </p>
+          <div className="text-base md:text-lg">
+            {content?.subtitle && <PortableText value={content.subtitle} />}
+          </div>
 
           <div className="bg-[#FEF4E8] p-4 md:p-6 rounded-md shadow-md space-y-4">
             <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">

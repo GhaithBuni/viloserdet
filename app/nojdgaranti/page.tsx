@@ -1,9 +1,60 @@
 import { client } from "@/sanity/lib/client";
-export const dynamic = "force-dynamic";
+import { PortableText } from "@portabletext/react";
+import type { PortableTextBlock } from "@portabletext/types";
+import type { PortableTextComponents } from "@portabletext/react";
 import { Badge } from "../components/Badge";
 
-const page = async () => {
-  const content = await client.fetch(`*[_type == "nojdgaranti"][0]`);
+export const dynamic = "force-dynamic";
+
+type PTValue = PortableTextBlock[] | string | null | undefined;
+
+interface Nojdgaranti {
+  title?: string;
+  subtitle?: string;
+
+  CustomizedService?: string;
+  CustomizedServiceDescription?: PTValue;
+
+  Communication?: string;
+  CommunicationDescription?: PTValue;
+
+  Feedback?: string;
+  FeedbackDescription?: PTValue;
+
+  anythingWrong?: string;
+  descriptionAnythingWrong?: string[];
+
+  Confidence?: string;
+  ConfidenceDescription?: PTValue;
+}
+
+const ptComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => (
+      <p className="text-base md:text-lg leading-7 whitespace-pre-line">
+        {children}
+      </p>
+    ),
+  },
+};
+
+// helper
+const PT: React.FC<{ value: PTValue }> = ({ value }) => {
+  if (!value) return null;
+  if (Array.isArray(value)) {
+    return <PortableText value={value} components={ptComponents} />;
+  }
+  return (
+    <p className="text-base md:text-lg leading-7 whitespace-pre-line">
+      {value}
+    </p>
+  );
+};
+
+const Page = async () => {
+  const content = await client.fetch<Nojdgaranti>(
+    `*[_type == "nojdgaranti"][0]`
+  );
 
   return (
     <div className="mt-20">
@@ -21,18 +72,14 @@ const page = async () => {
             <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
               {content?.CustomizedService}
             </h3>
-            <p className="text-base md:text-lg">
-              {content?.CustomizedServiceDescription}
-            </p>
+            <PT value={content?.CustomizedServiceDescription} />
           </div>
 
           <div className="space-y-4">
             <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
               {content?.Communication}
             </h3>
-            <p className="text-base md:text-lg">
-              {content?.CommunicationDescription}
-            </p>
+            <PT value={content?.CommunicationDescription} />
           </div>
         </section>
 
@@ -40,7 +87,7 @@ const page = async () => {
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.Feedback}
           </h3>
-          <p>{content?.FeedbackDescription}</p>
+          <PT value={content?.FeedbackDescription} />
         </section>
 
         <section className="space-y-4 text-base md:text-lg">
@@ -58,7 +105,7 @@ const page = async () => {
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.Confidence}
           </h3>
-          <p>{content?.ConfidenceDescription}</p>
+          <PT value={content?.ConfidenceDescription} />
         </section>
 
         <section className="space-y-6">
@@ -69,4 +116,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Page;

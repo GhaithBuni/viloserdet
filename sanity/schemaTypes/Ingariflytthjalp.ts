@@ -4,7 +4,12 @@ const ingariflytthjalp = {
   type: "document",
   fields: [
     { name: "title", type: "string", title: "Titel" },
-    { name: "subtitle", type: "text", title: "Beskrivning" },
+    {
+      name: "subtitle",
+      type: "array",
+      of: [{ type: "block" }],
+      title: "Beskrivning",
+    },
     { name: "SectionTitle", type: "string", title: "Sektionsrubrik" },
     {
       name: "PriceList",

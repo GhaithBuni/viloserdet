@@ -23,7 +23,8 @@ const nojdgaranti = {
     {
       name: "CustomizedServiceDescription",
       title: "Kundanpassad Service Beskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       name: "Communication",
@@ -33,7 +34,8 @@ const nojdgaranti = {
     {
       name: "CommunicationDescription",
       title: "Kommunikation Beskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       name: "Feedback",
@@ -43,7 +45,8 @@ const nojdgaranti = {
     {
       name: "FeedbackDescription",
       title: "Feedback Beskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
     {
       name: "anythingWrong",
@@ -64,7 +67,8 @@ const nojdgaranti = {
     {
       name: "ConfidenceDescription",
       title: "Confidence Beskrivning",
-      type: "text",
+      type: "array",
+      of: [{ type: "block" }],
     },
   ],
 };
