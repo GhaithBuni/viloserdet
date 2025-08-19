@@ -15,12 +15,7 @@ const ingariflytthjalp = {
       name: "PriceList",
       type: "array",
       title: "Prislista",
-      of: [
-        {
-          type: "object",
-          fields: [{ name: "description", type: "text", title: "Beskrivning" }],
-        },
-      ],
+      of: [{ type: "block" }],
     },
     {
       name: "servicesSection",
@@ -34,10 +29,7 @@ const ingariflytthjalp = {
           type: "array",
           of: [
             {
-              type: "object",
-              fields: [
-                { name: "description", type: "text", title: "Beskrivning" },
-              ],
+              type: "block",
             },
           ],
         },
@@ -55,10 +47,7 @@ const ingariflytthjalp = {
           type: "array",
           of: [
             {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
+              type: "block",
             },
           ],
         },
@@ -76,10 +65,7 @@ const ingariflytthjalp = {
           type: "array",
           of: [
             {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
+              type: "block",
             },
           ],
         },
@@ -97,10 +83,7 @@ const ingariflytthjalp = {
           type: "array",
           of: [
             {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
+              type: "block",
             },
           ],
         },
@@ -118,17 +101,19 @@ const ingariflytthjalp = {
           type: "array",
           of: [
             {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
+              type: "block",
             },
           ],
         },
       ],
     },
     { name: "Payment", type: "string", title: "Betalning" },
-    { name: "PaymentDes", type: "text", title: "Betalningsbeskrivning" },
+    {
+      name: "PaymentDes",
+      type: "array",
+      title: "Betalningsbeskrivning",
+      of: [{ type: "block" }],
+    },
   ],
 };
 

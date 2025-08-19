@@ -1,162 +1,153 @@
+// schemas/Ingariflyttstadingen.ts
+const blockField = {
+  type: "array",
+  of: [
+    {
+      type: "block",
+      // Optional: keep the toolbar tidy but useful
+      styles: [
+        { title: "Normal", value: "normal" },
+        { title: "H2", value: "h2" },
+        { title: "H3", value: "h3" },
+      ],
+      lists: [
+        { title: "Bullet", value: "bullet" },
+        { title: "Numbered", value: "number" },
+      ],
+      marks: {
+        decorators: [
+          { title: "Bold", value: "strong" },
+          { title: "Italic", value: "em" },
+          { title: "Underline", value: "underline" },
+        ],
+        annotations: [
+          {
+            name: "link",
+            type: "object",
+            title: "Link",
+            fields: [{ name: "href", type: "url", title: "URL" }],
+          },
+        ],
+      },
+    },
+  ],
+};
+
 const Ingariflyttstadingen = {
   name: "Ingariflyttstadingen",
   title: "Ingariflyttstadingen",
   type: "document",
   fields: [
-    {
-      name: "title",
-      title: "Titel",
-      type: "string",
-    },
+    // Document title (kept string)
+    { name: "title", title: "Titel", type: "string" },
+
+    // Included services: keep each service as an object with a TITLE + BODY (block)
     {
       name: "IncludedServices",
-      type: "array",
       title: "Inkluderade Tjänster",
+      type: "array",
       of: [
         {
           type: "object",
           fields: [
-            { name: "title", type: "string", title: "Tjänstens Namn" },
+            { name: "title", type: "string", title: "Tjänstens Namn" }, // (title stays string)
             {
-              name: "items",
+              name: "body",
               type: "array",
-              title: "Punkter",
-              of: [{ type: "string" }],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Preparations",
-      title: "Förberedelser infor stadning",
-      type: "object",
-      fields: [
-        { name: "title", type: "string", title: "Sektionsrubrik" },
-        {
-          name: "PreparationsList",
-          title: "Förberedelser Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
+              title: "Innehåll",
+              of: blockField.of,
+            }, // (block)
           ],
         },
       ],
     },
 
+    // Preparations section: TITLE + BODY (block)
+    {
+      name: "Preparations",
+      title: "Förberedelser inför städning",
+      type: "object",
+      fields: [
+        { name: "title", type: "string", title: "Sektionsrubrik" }, // (title)
+        { name: "body", title: "Innehåll", type: "array", of: blockField.of }, // (block)
+      ],
+    },
+
+    // Cancellation: TITLE + TEXT (block)
     {
       name: "cancellationAndRebooking",
       type: "string",
       title: "Av- och ombokning",
-    },
+    }, // (title)
     {
       name: "cancellationAndRebookingText",
-      type: "text",
+      type: "array",
       title: "Av- och ombokning text",
-    },
+      of: blockField.of,
+    }, // (block)
 
-    {
-      name: "keys",
-      type: "string",
-      title: "Nycklar",
-    },
+    // Keys: TITLE + TEXT (block)
+    { name: "keys", type: "string", title: "Nycklar" }, // (title)
     {
       name: "keysText",
-      type: "text",
-      title: " Nycklar text",
-    },
+      type: "array",
+      title: "Nycklar text",
+      of: blockField.of,
+    }, // (block)
 
+    // Not Included: TITLE + BODY (block)
     {
       name: "notIncluded",
       title: "Ej inkluderat",
       type: "object",
       fields: [
-        { name: "title", type: "string", title: "Sektionsrubrik" },
-        {
-          name: "notIncludedList",
-          title: "Ej inkluderat Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
-        },
+        { name: "title", type: "string", title: "Sektionsrubrik" }, // (title)
+        { name: "body", title: "Innehåll", type: "array", of: blockField.of }, // (block)
       ],
     },
+
+    // Can't Order: TITLE + BODY (block)
     {
       name: "cantOrder",
       title: "Kan inte beställa",
       type: "object",
       fields: [
-        { name: "title", type: "string", title: "Sektionsrubrik" },
-        {
-          name: "cantOrderList",
-          title: "Kan inte beställa Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
-        },
+        { name: "title", type: "string", title: "Sektionsrubrik" }, // (title)
+        { name: "body", title: "Innehåll", type: "array", of: blockField.of }, // (block)
       ],
     },
+
+    // Right to stop work: TITLE + TEXT (block)
     {
       name: "RightToStopWork",
       type: "string",
       title: "Rätt att stoppa arbetet",
-    },
+    }, // (title)
     {
       name: "RightToStopWorkText",
-      type: "text",
+      type: "array",
       title: "Rätt att stoppa arbetet text",
-    },
-    { name: "Payment", type: "string", title: "Betalning" },
-    { name: "PaymentDes", type: "text", title: "Betalningsbeskrivning" },
+      of: blockField.of,
+    }, // (block)
+
+    // Payment: TITLE + TEXT (block)
+    { name: "Payment", type: "string", title: "Betalning" }, // (title)
     {
-      name: "QualityGuarantee",
-      type: "string",
-      title: "Kvalitetsgaranti",
-    },
+      name: "PaymentDes",
+      type: "array",
+      title: "Betalningsbeskrivning",
+      of: blockField.of,
+    }, // (block)
+
+    // Quality Guarantee: TITLE + TEXT (block)
+    { name: "QualityGuarantee", type: "string", title: "Kvalitetsgaranti" }, // (title)
     {
       name: "QualityGuaranteeText",
-      type: "text",
+      type: "array",
       title: "Kvalitetsgaranti text",
-    },
-    {
-      name: "terms",
-      title: "Villkor",
-      type: "object",
-      fields: [
-        { name: "title", type: "string", title: "Sektionsrubrik" },
-        {
-          name: "termsList",
-          title: "Villkor Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
-        },
-        { name: "LastRow", type: "string", title: "Sista raden" },
-      ],
-    },
+      of: blockField.of,
+    }, // (block)
   ],
 };
+
 export default Ingariflyttstadingen;

@@ -6,15 +6,11 @@ import type { PortableTextComponents } from "@portabletext/react";
 
 export const dynamic = "force-dynamic";
 
-type ServiceItem = {
-  description: string;
-};
-type ServiceItem1 = {
-  Description: string;
-};
+/** Coerce any value to a PT blocks array (or empty array). */
+const asBlocks = (v: unknown): PortableTextBlock[] =>
+  Array.isArray(v) ? (v as PortableTextBlock[]) : [];
 
-type PTValue = PortableTextBlock[] | string | null | undefined;
-
+/** Portable Text renderers (paragraphs + lists). */
 const ptComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
@@ -23,19 +19,19 @@ const ptComponents: PortableTextComponents = {
       </p>
     ),
   },
-};
-
-// Helper for PortableText + fallback
-const PT: React.FC<{ value: PTValue }> = ({ value }) => {
-  if (!value) return null;
-  if (Array.isArray(value)) {
-    return <PortableText value={value} components={ptComponents} />;
-  }
-  return (
-    <p className="text-base md:text-lg leading-7 whitespace-pre-line">
-      {value}
-    </p>
-  );
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-5 space-y-1 text-base md:text-lg">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-5 space-y-1 text-base md:text-lg">
+        {children}
+      </ol>
+    ),
+  },
+  listItem: ({ children }) => <li>{children}</li>,
 };
 
 const Page = async () => {
@@ -44,118 +40,107 @@ const Page = async () => {
   return (
     <div>
       <div className="bg-white text-gray-800 px-4 py-10 md:px-8 lg:px-16 lg:py-20 space-y-12 max-w-screen-xl mx-auto mt-20">
+        {/* Title */}
         <h2 className="text-3xl md:text-4xl font-bold text-[#0D3F53]">
           {content?.title}
         </h2>
 
+        {/* Description (block) */}
         <section className="space-y-4">
-          {/* description now uses PortableText */}
-          <PT value={content?.description} />
+          <PortableText
+            value={asBlocks(content?.description)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Included Services */}
         <section className="bg-[#FEF4E8] p-4 md:p-6 rounded-md shadow-md space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.IncludedServices?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.IncludedServices?.IncludedServicesList?.map(
-              (service: ServiceItem, index: number) => (
-                <li key={index}>{service.description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.IncludedServices?.IncludedServicesList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Not Included */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.notIncluded?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.notIncluded?.notIncludedList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.notIncluded?.notIncludedList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Preparations */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.Preparations?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-2">
-            {content?.Preparations?.PreparationsList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.Preparations?.PreparationsList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Keys Management */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.KeysManagement?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.KeysManagement?.keysManagementList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.KeysManagement?.keysManagementList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Home Not Ready */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.homeNotReady?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.homeNotReady?.homeNotReadyList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.homeNotReady?.homeNotReadyList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Cancellation & Rebooking */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.cancellationAndRebooking?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.cancellationAndRebooking?.CancellationAndRebookingList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
+          <PortableText
+            value={asBlocks(
+              content?.cancellationAndRebooking?.CancellationAndRebookingList
             )}
-          </ul>
+            components={ptComponents}
+          />
         </section>
 
+        {/* Payment */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.payment?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.payment?.PaymentList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
+          <PortableText
+            value={asBlocks(content?.payment?.PaymentList)}
+            components={ptComponents}
+          />
         </section>
 
+        {/* Quality Guarantee */}
         <section className="space-y-4">
           <h3 className="text-xl md:text-2xl font-semibold text-[#0D3F53]">
             {content?.QualityGuarantee?.title}
           </h3>
-          <ul className="list-disc pl-5 text-base md:text-lg space-y-1">
-            {content?.QualityGuarantee?.QualityGuaranteeList?.map(
-              (service: ServiceItem1, index: number) => (
-                <li key={index}>{service.Description}</li>
-              )
-            )}
-          </ul>
-          <p className="text-base md:text-lg">{content?.lastRow}</p>
+          <PortableText
+            value={asBlocks(content?.QualityGuarantee?.QualityGuaranteeList)}
+            components={ptComponents}
+          />
         </section>
       </div>
     </div>

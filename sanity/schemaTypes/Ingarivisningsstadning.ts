@@ -1,41 +1,65 @@
+// schemas/Ingarivisningsstadning.ts
+
+const blockField = {
+  type: "array",
+  of: [
+    {
+      type: "block",
+      styles: [
+        { title: "Normal", value: "normal" },
+        { title: "H2", value: "h2" },
+        { title: "H3", value: "h3" },
+      ],
+      lists: [
+        { title: "Bullet", value: "bullet" },
+        { title: "Numbered", value: "number" },
+      ],
+      marks: {
+        decorators: [
+          { title: "Bold", value: "strong" },
+          { title: "Italic", value: "em" },
+          { title: "Underline", value: "underline" },
+        ],
+        annotations: [
+          {
+            name: "link",
+            type: "object",
+            title: "Link",
+            fields: [{ name: "href", type: "url", title: "URL" }],
+          },
+        ],
+      },
+    },
+  ],
+};
+
 const Ingarivisningsstadning = {
   name: "Ingarivisningsstadning",
   title: "Ingarivisningsstadning",
   type: "document",
   fields: [
-    {
-      name: "title",
-      title: "Titel",
-      type: "string",
-    },
-    {
-      name: "description",
-      type: "array",
-      of: [{ type: "block" }],
-      title: "Beskrivning",
-    },
-    { name: "description2", type: "text", title: "Beskrivning 2" },
+    { name: "title", title: "Titel", type: "string" },
+
+    // Descriptions as blocks
+    { name: "description", title: "Beskrivning", ...blockField },
+
+    // Included Services
     {
       name: "IncludedServices",
       title: "Inkluderade Tjänster",
       type: "object",
       fields: [
         { name: "title", type: "string", title: "Sektionsrubrik" },
+        // was array of objects -> now blocks (use bullets in Studio)
         {
           name: "IncludedServicesList",
           title: "Inkluderade Tjänster Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Not Included
     {
       name: "notIncluded",
       title: "Ej inkluderat",
@@ -45,39 +69,27 @@ const Ingarivisningsstadning = {
         {
           name: "notIncludedList",
           title: "Ej inkluderat Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Preparations
     {
       name: "Preparations",
-      title: "Förberedelser infor stadning",
+      title: "Förberedelser inför städning",
       type: "object",
       fields: [
         { name: "title", type: "string", title: "Sektionsrubrik" },
         {
           name: "PreparationsList",
           title: "Förberedelser Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Keys Management
     {
       name: "KeysManagement",
       title: "Nyckelhantering",
@@ -87,18 +99,12 @@ const Ingarivisningsstadning = {
         {
           name: "keysManagementList",
           title: "Nyckelhantering Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Home Not Ready
     {
       name: "homeNotReady",
       title: "Om bostaden inte är redo",
@@ -108,18 +114,12 @@ const Ingarivisningsstadning = {
         {
           name: "homeNotReadyList",
           title: "Om bostaden inte är redo Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Cancellation & Rebooking
     {
       name: "cancellationAndRebooking",
       title: "Av- och ombokning",
@@ -129,39 +129,23 @@ const Ingarivisningsstadning = {
         {
           name: "CancellationAndRebookingList",
           title: "Av- och ombokning Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
+
+    // Payment
     {
       name: "payment",
       title: "Betalning",
       type: "object",
       fields: [
         { name: "title", type: "string", title: "Sektionsrubrik" },
-        {
-          name: "PaymentList",
-          title: "Betalning Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
-        },
+        { name: "PaymentList", title: "Betalning Lista", ...blockField },
       ],
     },
+
+    // Quality Guarantee
     {
       name: "QualityGuarantee",
       title: "Kvalitetsgaranti",
@@ -171,19 +155,11 @@ const Ingarivisningsstadning = {
         {
           name: "QualityGuaranteeList",
           title: "Kvalitetsgaranti Lista",
-          type: "array",
-          of: [
-            {
-              type: "object",
-              fields: [
-                { name: "Description", type: "text", title: "Beskrivning" },
-              ],
-            },
-          ],
+          ...blockField,
         },
       ],
     },
-    { name: "lastRow", type: "text", title: "Sista raden" },
   ],
 };
+
 export default Ingarivisningsstadning;
