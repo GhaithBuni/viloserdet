@@ -78,29 +78,32 @@ const useBooking = () => {
     setLoading(true);
     setError(null);
     setSuccess(false);
-
     try {
       console.log("🟡 Sending data to API:", bookingData);
-
-      const { data } = await axios.post(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/bookings`,
         bookingData,
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-
-      console.log("✅ Booking Successful:", data);
+      console.log("✅ Full Response:", response);
+      console.log("✅ Response Status:", response.status);
+      console.log("✅ Response Data:", response.data);
       setSuccess(true);
     } catch (error) {
-      console.error("❌ Booking Error:", error);
+      console.error("❌ Full Error:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("❌ Error Response:", error.response);
+        console.error("❌ Error Status:", error.response?.status);
+        console.error("❌ Error Data:", error.response?.data);
+      }
       setError(
         axios.isAxiosError(error) && error.response
           ? error.response.data.error || "Server error"
           : "Unknown error"
       );
     }
-
     setLoading(false);
   };
 
