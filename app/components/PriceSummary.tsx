@@ -198,8 +198,12 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
       );
       if (response.data.valid) {
         setDiscountPercentage(response.data.percentage);
-        setTotalPrice(totalPrice * (1 - response.data.percentage / 100));
-        setDiscountedPrice(totalPrice * (response.data.percentage / 100));
+        setTotalPrice(
+          Math.round(totalPrice * (1 - response.data.percentage / 100))
+        );
+        setDiscountedPrice(
+          Math.round(totalPrice * (response.data.percentage / 100))
+        );
         console.log(`✅ Rabatt tillämpas ${response.data.percentage}%`);
       }
     } catch (error) {
