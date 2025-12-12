@@ -243,7 +243,7 @@ const PriceSummary: React.FC<PriceSummaryProps> = ({
         : packgingPrice
       : 0) +
     (selectedDisposal === "Ja" ? furniturePrice : 0) +
-    (selectedCleaning === "Ja" ? cleaningPrice * 0.85 : 0); // Apply 15% discount
+    (selectedCleaning === "Ja" ? Math.round(cleaningPrice * 0.85) : 0); // Apply 15% discount
 
   if (selectedFurniture["Tungt"]) {
     finalTotalPrice += 600 * selectedFurniture["Tungt"];
