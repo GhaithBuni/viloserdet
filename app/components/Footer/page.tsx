@@ -53,22 +53,22 @@ const Footer = async () => {
             <h3 className="text-base font-semibold">Företag</h3>
             <ul className="mt-2 space-y-1 text-sm text-gray-200">
               <li>
-                <a href="/OmOss" className="hover:text-[#deb82d]">
+                <a href="/omoss" className="hover:text-[#deb82d]">
                   Om oss
                 </a>
               </li>
               <li>
-                <a href="/FAQ" className="hover:text-[#deb82d]">
+                <a href="/faq" className="hover:text-[#deb82d]">
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="/Kontakt" className="hover:text-[#deb82d]">
+                <a href="/kontakt" className="hover:text-[#deb82d]">
                   Kontakt
                 </a>
               </li>
               <li>
-                <a href="/Integritetspolicy" className="hover:text-[#deb82d]">
+                <a href="/integritetspolicy" className="hover:text-[#deb82d]">
                   Integritetspolicy
                 </a>
               </li>

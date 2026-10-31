@@ -31,7 +31,7 @@ const page = async () => {
 
         <div className="flex justify-start md:justify-end">
           <a
-            href="/Kontakt"
+            href="/kontakt"
             className="inline-block bg-[#0D3F53] text-white px-5 py-3 rounded-lg shadow-md flex items-center justify-center transition  hover:bg-[#0A2E3D]"
           >
             Kontakta oss

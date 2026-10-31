@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { client } from "@/sanity/lib/client";
 import TeamSection from "../components/TeamSection";
+import { normalizeInternalHref } from "@/lib/utils";
 export const dynamic = "force-dynamic"; // disables static caching
 
 type ServiceItem = {
@@ -149,7 +150,7 @@ const page = async () => {
 
                   {/* Button */}
                   <a
-                    href={service.link}
+                    href={normalizeInternalHref(service.link)}
                     className="inline-block bg-[#DEB82D] text-[#0D3F53] font-semibold text-lg py-2 px-6 rounded-lg shadow-md hover:bg-[#0D3F53] hover:text-[#DEB82D] transition"
                   >
                     Boka
@@ -174,7 +175,7 @@ const page = async () => {
             {/* Icons Section */}
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-12 justify-center items-center">
               {/* Försäkring */}
-              <a href="/Forsakring" className="flex flex-col items-center">
+              <a href="/forsakring" className="flex flex-col items-center">
                 <Image
                   src="/insurance.svg"
                   alt="Försäkring"
@@ -196,7 +197,7 @@ const page = async () => {
               </a>
 
               {/* Prisgaranti */}
-              <a href="/Prisgaranti" className="flex flex-col items-center">
+              <a href="/prisgaranti" className="flex flex-col items-center">
                 <Image
                   src="/wallet.svg"
                   alt="Prisgaranti"

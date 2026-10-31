@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 
 import { Reviews } from "./Reviews";
 import InfoPanel from "./InfoPanel";
+import { normalizeInternalHref } from "@/lib/utils";
 
 type Tip = { title: string; description: string };
 type Service = { title: string; subtitle: string; image: any; link?: string };
@@ -113,7 +114,7 @@ export default function HomeClient({
               {/* Button */}
               {service.link && (
                 <a
-                  href={service.link}
+                  href={normalizeInternalHref(service.link)}
                   className="inline-block bg-[#DEB82D] text-[#0D3F53] font-semibold text-lg py-2 px-6 rounded-lg shadow-md hover:bg-[#0D3F53] hover:text-[#DEB82D] transition"
                 >
                   Boka
@@ -138,7 +139,7 @@ export default function HomeClient({
           {/* Icons Section */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-12 justify-center items-center">
             {/* Försäkring */}
-            <a href="/Forsakring" className="flex flex-col items-center">
+            <a href="/forsakring" className="flex flex-col items-center">
               <Image
                 src={content?.whyUs?.Insurance?.image?.asset?.url}
                 alt="Försäkring"
@@ -164,7 +165,7 @@ export default function HomeClient({
             </a>
 
             {/* Prisgaranti */}
-            <a href="/Prisgaranti" className="flex flex-col items-center">
+            <a href="/prisgaranti" className="flex flex-col items-center">
               <Image
                 src={content?.whyUs?.priceGuarantee?.image?.asset?.url}
                 alt="Prisgaranti"

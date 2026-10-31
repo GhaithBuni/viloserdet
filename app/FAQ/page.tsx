@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { normalizeInternalHref } from "@/lib/utils";
 
 // Tailwind renderers for Portable Text
 const portableTextComponents = {
@@ -25,7 +26,7 @@ const portableTextComponents = {
   marks: {
     link: ({ children, value }: any) => (
       <a
-        href={value?.href}
+        href={normalizeInternalHref(value?.href)}
         rel="noopener noreferrer"
         target="_blank"
         className="underline"
