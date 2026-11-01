@@ -69,10 +69,10 @@ const NavBar = () => {
 
           {/* Other Links */}
           {[
-            { name: "Tips inför flytt", url: "/tipsinforflytt" },
-            { name: "Kontakt", url: "/kontakt" },
-            { name: "Om oss", url: "/omoss" },
-            { name: "FAQ", url: "/faq" },
+            { name: "Tips inför flytt", url: "/Tipsinforflytt" },
+            { name: "Kontakt", url: "/Kontakt" },
+            { name: "Om oss", url: "/OmOss" },
+            { name: "FAQ", url: "/FAQ" },
           ].map((link, index) => (
             <a
               key={index}
@@ -97,20 +97,20 @@ const NavBar = () => {
             {isIngarOpen && (
               <div className="absolute bg-white text-black mt-3 rounded-md shadow-lg w-56 text-base xl:text-lg right-0">
                 <a
-                  href="/ingariflytthjalp"
+                  href="/Ingariflytthjalp"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Flytthjälp
                 </a>
                 <a
-                  href="/ingariflyttstadingen"
+                  href="/Ingariflyttstadingen"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Flyttstädning
                 </a>
 
                 <a
-                  href="/ingarivisningsstadning"
+                  href="/Ingarivisningsstadning"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Visningstädning
@@ -219,10 +219,10 @@ const NavBar = () => {
 
           {/* Other Links */}
           {[
-            { name: "Tips inför flytt", url: "/tipsinforflytt" },
-            { name: "Kontakt", url: "/kontakt" },
-            { name: "Om oss", url: "/omoss" },
-            { name: "FAQ", url: "/faq" },
+            { name: "Tips inför flytt", url: "/Tipsinforflytt" },
+            { name: "Kontakt", url: "/Kontakt" },
+            { name: "Om oss", url: "/OmOss" },
+            { name: "FAQ", url: "/FAQ" },
           ].map((link, index) => (
             <a
               key={index}
@@ -247,20 +247,20 @@ const NavBar = () => {
             {isIngarOpen && (
               <div className="bg-white text-black mt-2 rounded-md shadow-lg w-full">
                 <a
-                  href="/ingariflytthjalp"
+                  href="/Ingariflytthjalp"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Flytthjälp
                 </a>
                 <a
-                  href="/ingariflyttstadingen"
+                  href="/Ingariflyttstadingen"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Flyttstädning
                 </a>
 
                 <a
-                  href="/ingarivisningsstadning"
+                  href="/Ingarivisningsstadning"
                   className="block px-4 py-3 hover:bg-gray-200"
                 >
                   Visningstädning

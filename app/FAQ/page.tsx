@@ -1,4 +1,4 @@
-// app/faq/page.tsx  (adjust the route/file to your project) add  lowercase URLs
+// app/faq/page.tsx  (adjust the route/file to your project)
 import { client } from "@/sanity/lib/client";
 import { faqPageQuery } from "@/sanity/lib/faq.query";
 import { PortableText } from "@portabletext/react";
